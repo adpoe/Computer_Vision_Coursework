@@ -1,0 +1,9 @@
+# Anthony Poerio (adp59@pitt.edu)
+## University of Pittsburgh
+## Log.txt for Homework01
+## CS1674 - Computer Vision
+## Fall 2016
+
+
+### Questions
+
