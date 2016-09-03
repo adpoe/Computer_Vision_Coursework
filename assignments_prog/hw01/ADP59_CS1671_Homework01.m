@@ -263,7 +263,7 @@ V = GRAY(:);
 min_cell = min(V);
 
 % Next, according to the Matlab documentation for ind2sub, we can find
-% cells ina  matrix with ind2sub like so:  
+% cells in a matrix with ind2sub like so:  
 % [I,J] = in2sub(size(A), find(A>5))
 % Let's apply that to our situation here 
 [row, col] = ind2sub(size(GRAY), find(V == min_cell));
@@ -482,7 +482,8 @@ GRAY(rand_y-15:rand_y+15, rand_x - 15) = 150; % Left edge
 GRAY(rand_y-15:rand_y+15, rand_x + 15) = 150; % Right edge
 GRAY(rand_y-15, rand_x:rand_x+15) = 150; % Top edge
 GRAY(rand_y+15, rand_x:rand_x+15) = 150; % Bottom edge
-GRAY(rand_y-15, (rand_x-15):rand_x) = 150; % Top edge
+% ^ Think I can just change the rand_x above to be rand_x-15:rand_x+15
+GRAY(rand_y-15, (rand_x-15):rand_x) = 150; % Top edge 
 GRAY(rand_y+15, (rand_x-15):rand_x) = 150; % Bottom edge
 imshow(GRAY)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -493,13 +494,132 @@ imshow(GRAY)
 
 %%
 %%%%%%%%%%%%%%%%%%
-% (16) Make a new figure, display the modified image (which includes both
+% (17) Make a new figure, display the modified image (which includes both
 % a white square and gray square), and save it to a file using saveas(gcf, 'new_image.png').
+
+% create figure
 figure
+
+% show the new figure to check it
 imshow(GRAY)
+
+% save the new figure, as specified
 saveas(gcf, 'new_image.png')
+
+
+% NOTE:: My version of the new PNG looks like it loses one edge of each
+% square bounding box... BUT, if you look at the same picture in imshow(..)
+% the squares are perfectly clear...
 
 
 
 %%
 
+% (c) LOOPS!!! 
+
+%%
+%%%%%%%%%%%%%%%%%%
+% (18) Create a script that prints all the values between 1 and 100,
+% in random order, with pauses of 1 second between each two prints.
+
+% We can use randperm for this, with documenation via (help randperm)
+P = randperm(100);
+
+for index = 1:100
+    fprintf('Number #%u = %u\n', index, P(index))
+    % pause on multiples of 2
+    if mod(index,2) == 0
+        pause(2)
+        % and print a newline
+        disp(' ')
+    end
+end
+
+
+%%
+
+
+
+
+
+%%
+%%%%%%%%%%%%%%%%%%
+% (19) Generate two random matrices A and B, and compute their product by hand, 
+% using loops. Check your code by comparing the loop-computed product with 
+% the product that you get from Matlab's A*B.
+
+% create our random matrics
+A = rand(10,10);
+B = rand(10,10);
+
+% do the calculation via Matlab's internal matrix multiplication function
+C = A * B;
+
+% allocate a new 10x10 matrix to store the results of our own
+% multiplication, done by 'hand' using for-loops
+D = zeros(10,10);
+
+% mutliply the matrix out, row by col, using for-loops
+for x = 1:size(A,2)
+    for y = 1:size(B,1)
+        D(y,x) = sum( A(x,:) .* B(:,y)');
+    end
+end
+% need to transpose the matrix at the end of this, so that it has the same
+% orientaction as C.
+D = D'
+
+% now, we can confirm that C == D by comparing them visually
+disp(C)
+disp(D)
+
+% test for equality via isequal(C,D) returns false, because they aren't 
+% exactly equal....
+% Though not explicitly asked for, we can see that we are very close,
+% within 0.1 in each cell using this code, adpated from: 
+% https://www.mathworks.com/matlabcentral/answers/9021-approximately-equal-or-egual-to-error
+idx = find(abs(C - D) >= 0.001)
+% ^ This yields an empty matrix, meaning ALL CELLS are at equal within a
+% margin of error of 0.001
+
+%%
+
+
+%%
+%%%%%%%%%%%%%%%%%%
+% (20) Implement a function my_unique that returns the number of unique rows in a matrix, 
+% and returns another matrix with any duplicate rows removed. 
+% You cannot just call Matlab's unique.
+disp('------------ PROBLEM #20 --------------')
+
+% function to test is my_unique, found in my_unique.m 
+X = rand(6,5);
+Y = ones(5,5);
+Y(2,1) = 3;
+Y(3,2) = 4;
+[Z1_uniqs, Z1] = my_unique(X)
+[Z2_uniqs, Z2] = my_unique(Y)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% PROBLEM #20 TESTS %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Check that X has 6 unique values after being processed by my_unique
+if isequal(size(X,1), Z1_uniqs)
+    disp('@my_unique CORRECTLY processed randomly generated matrix with @my_unique')
+else
+    disp('@my_unique breaks when passed a randomly generated matrix')
+end
+
+% check with a specially made matrix, which I want to have 3 uniques only,
+% out of 5 possible rows. There should only be **ONE** row of all 1's.
+if isequal(size(Z2,1), 3)
+    disp('@my_unique CORRECTLY processed my custom matrix, identified duplicate rows and removed them')
+else
+    disp('@my_unique is NOT correctly processing custom matrix and removing duplicate rows')
+end
+
+disp('---------- END PROBLEM #20 ------------')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
