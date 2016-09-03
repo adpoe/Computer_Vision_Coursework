@@ -9,4 +9,4 @@
 
 2.  Time to add 1 to every number using a LOOP:  Elapsed time is 0.819021 seconds.
 3.  Time to add 1 to every number NOT using a loop:  0.0035
-
+9.  Dimensions of pittsburgh.png are: 750 x 1500 x 3
