@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>CS1674: Homework 1 - Programming</title>
+</head>
+<body>
+<h2>CS1674: Homework 1 - Programming</h2>
+<b>Due:</b> <font color="red">9/12/2016</font>, 11:59pm</b> 
+<br><br>
+
+This assignment is worth 50 points.
+<br><br>
+
+In addition to your code, please also submit a <font face="Courier New">log.txt</font> file where you write down answers whenever the instructions below ask you to "write down" something. Pay close attention to whether you are allowed to use loops, in the below tasks. If the task doesn't explicitly mention that you are, you should not use loops. Remember to use the Matlab documentation whenever needed. 
+<br><br>
+<b>Please post on Piazza if you have any questions, rather than emailing the instructor directly, unless you have a concern you wish to keep private.</b> I will monitor Piazza daily.
+<br>
+
+<ol>
+<p>Numbers, matrices and functions:</p>
+<li>Generate a 1000000x1 (one million by one) vector of random numbers from a Gaussian (normal) distribution with mean of 0 and standard deviation of 5. Use Matlab's <font face="Courier New">randn</font> function. </li>
+<li>Add 1 to every value in this list, by using a loop. To determine how many times to loop, use Matlab's <font face="Courier New">size</font> function. Time this operation and print the number in the code. Write that number down.</li> Use Matlab's documentation to find out how to time operations. 
+<li>Now add 1 to every value in the original random vector, without using a loop. Time this operation, print the time and write it down. Use a different way to print the number than the method you used above. (See ways to print numbers at the beginning of the Matlab tutorial script.) Write down the number.</li> 
+<li>Copy this in your code: <font face="Courier New">A = rand(5, 3);</font> Then create a single command that ensures the sum in each row is (approximately) 1, without hard-coding any numbers except to denote along which matrix dimension (rows or columns) you're operating. In other words, I should be able to run your code on another 2-dimensional matrix, of a different size which you don't know, and it should still work. Hint: Use <font face="Courier New">repmat</font>.</li>
+<li>How many changes do you need to make to your code in the task right above to ensure that the sum in each <i>column</i> is 1?</li>
+<li>Create two matrices which when added together result in a matrix containing all numbers from 1 to 100. Each matrix should only be created with a single command.</li>
+<li>Plot the exponential function 2^x, for <i>even</i> values of x smaller than 100.</li>
+<li>Create a function that returns the n-th number in the Fibonacci sequence.</li>
+
+<p>Images:</p>
+<li>Read in <a href="pittsburgh.png">this image</a> into Matlab as a matrix, and write down its dimensions.</li>
+<li>Convert the image into grayscale.</li>
+<li>Find the darkest pixel in the image, and write its value and [row, column] in your answer sheet. Hint: Convert to a vector first, and use Matlab's <font face="Courier New">ind2sub</font> function. Use Matlab's <font face="Courier New">help</font> to find out how to use that function.</li>
+<li>Use the function <font face="Courier New">sum</font> and a logical operator measuring equality to a scalar, to determine and write down how many pixels in the grayscale image equal the value 6.</li>
+<li>Consider a 31x31 square (a square with side equal to 31 pixels) that is centered on the darkest pixel. Replace all pixels in that square with white pixels (pixels with value 255). Do this with loops.</li>
+<li>Now use the code you wrote above to find one of several pixels with value 6. Find which of those pixels are at least 15 pixels away from the border of the image in any direction (not including the 6-valued pixel itself). You can use loops. Let's call these 15-away 6-valued pixels <font face="Courier New">inds</font> (you don't have to call them this in your code).</li>
+<li>Write code to <i>randomly</i> choose one of the <font face="Courier New">inds</font> pixels.</li>
+<li>Now consider another 31x31 square, but this time gray (e.g. with pixel values 150). Take the image with the white square in it. Replace the randomly chosen pixel from above, and the 31x31 square in the image that's centered on this pixel, with the gray square. This time you are NOT allowed to use loops. Note that you shouldn't run into border issues because of the 15-away code you wrote above.</li>
+<li>Make a new figure, display the modified image (which includes both a white square and gray square), and save it to a file using <font face="courier new">saveas(gcf, 'new_image.png')</font>.</li>
+
+<p>Loops (you're allowed to use them for the below tasks):</p>
+<li>Create a script that prints all the values between 1 and 100, in random order, with pauses of 1 second between each two prints.</li>
+<li>Generate two random matrices <font face="Courier New">A</font> and <font face="Courier New">B</font>, and compute their product by hand, using loops. Check your code by comparing the loop-computed product with the product that you get from Matlab's <font face="Courier New">A*B</font>. </li>
+<li>Implement a function <font face="courier new">my_unique</font> that returns the number of unique rows in a matrix, and returns another matrix with any duplicate rows removed. You cannot just call Matlab's <font face="courier new">unique</font>.</li>
+<li>Create another script which reads in an image. It computes the scalar average pixel value along each channel (R, G, B) separately. It then subtracts the average value per channel from the corresponding channel. Finally, it writes the image to a file <font face="Courier New">mean_sub.png</font>. </li>
+</ol>
+
+<br><br>
+
+</body>
+</html>

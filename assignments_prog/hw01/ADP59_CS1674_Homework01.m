@@ -144,7 +144,7 @@ fn_q5(A)
 check_q5(A)
 
 %%% ANSWER:  We need to sum on the 1st dimenson (columns) and then repmat
-%%% th column sums, instead of the row sums, so we can divide by them.
+%%% the column sums, instead of the row sums, so we can divide by them.
 %%
 
 
@@ -205,8 +205,7 @@ fib12 = fib_n(12)  % should be 144
 fib13 = fib_n(13)  % should be 233
 
 % run a quick test to see if all of our examples are correct
-if fib10==55 && fib11==89 && fib12==144 && fib13==233
-    
+if fib10==55 && fib11==89 && fib12==144 && fib13==233 
     disp('=) FIB NUMBERS PASS TESTING')
 else
     disp('xxx FIB NUMBERS FAIL TESTING xxx')
@@ -298,61 +297,10 @@ disp('----- END Q12 ----')
 
 % Okay, so darkest pixel is at: [row, col]
 
-% first, make the square, fill it with ones
-M = ones(31, 31);
-disp(M)
-
-% Then fill it with 255's using two for-loops
-for y = 1:size(M,1)
-    for x = 1:size(M,2)
-        if (x == 1 || x == 31 || ...
-            y == 1 || y == 31)
-            M(y,x) = 255;
-        end
-    end
-end
-
-% ABOVE CODE SHOWS WE CAN OUTLINE A SQUARE WITH 255s
-
-% Next, do that in the Pittsburgh PNG
-GRAY_DUP = GRAY;
-% size(GRAY,1) == 750   // row == 604, so 1==y
-% size(GRAY,2) == 1500  // col == 1290, and 2==x
-% CREATES INTERSECTION
-for y = 1:size(GRAY,1)
-    for x = 1:size(GRAY,2)
-        if (x == (col-31) || x == (col+31) || ...
-            y == (row-31) || y == (row+31) )
-            GRAY(y,x) = 255;
-        end
-    end
-end
-imshow(GRAY)
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% SOLUTION TO #13 %%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% next, draw the box, replacing ALL PIXELS in a 31x31 square
-for y = 1:size(GRAY,1)
-    for x = 1:size(GRAY,2)
-        % find all pixels within a 31x31 square of the target pixel
-        if ( y >= row-floor(31/2) && ...
-             y <= row+ceil(31/2)  && ... 
-             x >= col-floor(31/2) && ...
-             x <= col+ceil(31/2)      )
-            GRAY(y,x) = 255;
-        end
-    end
-end
-imshow(GRAY)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% BOUNDING BOX ATTTEMPT FOR #13 %%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% next, draw the box, replacing ALL PIXELS in a 31x31 square
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% BOUNDING BOX SOLUTIONFOR #13 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Draw the box, replacing ALL PIXELS in a 31x31 square
 for y = 1:size(GRAY,1)
     for x = 1:size(GRAY,2)
         % only check if we're in the desired area
@@ -377,18 +325,14 @@ for y = 1:size(GRAY,1)
     end
 end
 imshow(GRAY)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-%reset
-GRAY = GRAY_DUP;
+%reset (if needed)
+%GRAY = GRAY_DUP;
 
-% finally, display end result, showing it is full of 255s
-disp(M)
-
-% QUESTION:  Why is being centered on the darkest pixel relevant to this?
 
 %%
 
@@ -474,18 +418,36 @@ disp('----- END Q15 -----')
 %%%%%%%% SOLUTION FOR Q16 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % find the start of each line we need to draw, and fill the borders along
-% it up to 31 px
-% also need to fix the issue that it's not 31x31
+% that square up to 31 px
+
+
+% also need to fix the issue that it's not 31x31 easily,
 % need to draw 15 along one direction and 16 along the other,
-% can use floor and ceil for this
-GRAY(rand_y-15:rand_y+15, rand_x - 15) = 150; % Left edge
-GRAY(rand_y-15:rand_y+15, rand_x + 15) = 150; % Right edge
-GRAY(rand_y-15, rand_x:rand_x+15) = 150; % Top edge
-GRAY(rand_y+15, rand_x:rand_x+15) = 150; % Bottom edge
-% ^ Think I can just change the rand_x above to be rand_x-15:rand_x+15
-GRAY(rand_y-15, (rand_x-15):rand_x) = 150; % Top edge 
-GRAY(rand_y+15, (rand_x-15):rand_x) = 150; % Bottom edge
+% --> use floor and ceil for this, like we did before
+
+%%% X-DIRECTION LINES
+% draw TOP of box
+% index into to top-left and draw 31px across (along x)
+GRAY(rand_y-floor(31/2), rand_x-floor(31/2):rand_x+ceil(31/2)) = 150;
+% draw BOTTOM of box
+% index into bottom-left and draw 31px across (along x)
+GRAY(rand_y+floor(31/2), rand_x-floor(31/2):rand_x+ceil(31/2)) = 150; 
+%%%%
+
+%%% Y-DIRECTION LINES
+% draw LEFT side of box
+% index into top-left and draw 31px down (along y)
+GRAY(rand_y-floor(31/2):rand_y+ceil(31/2), rand_x-floor(31/2)) = 150;
+% draw RIGHT side of box
+% index into top-right and draw 31px down (along y)
+GRAY(rand_y-floor(31/2):rand_y+ceil(31/2), rand_x+floor(31/2)) = 150;
+%%%%%
+
 imshow(GRAY)
+
+%reset (if necessary)
+%GRAY = GRAY_DUP;
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -578,8 +540,8 @@ disp(D)
 % Though not explicitly asked for, we can see that we are very close,
 % within 0.1 in each cell using this code, adpated from: 
 % https://www.mathworks.com/matlabcentral/answers/9021-approximately-equal-or-egual-to-error
-idx = find(abs(C - D) >= 0.001)
-% ^ This yields an empty matrix, meaning ALL CELLS are at equal within a
+index = find(abs(C - D) >= 0.001)
+% ^ This yields an empty matrix, meaning ALL CELLS are at least equal within a
 % margin of error of 0.001
 
 %%
