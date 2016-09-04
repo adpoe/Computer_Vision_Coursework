@@ -7,6 +7,9 @@
 
 ### Questions
 
-2.  Time to add 1 to every number using a LOOP:  Elapsed time is 0.819021 seconds.
-3.  Time to add 1 to every number NOT using a loop:  0.0035
+2.  Time to add 1 to every number using a LOOP:          Elapsed time is 0.819021 seconds.
+3.  Time to add 1 to every number WITHOUT using a LOOP:  0.0035 seconds.
 9.  Dimensions of pittsburgh.png are: 750 x 1500 x 3
+11. The DARKEST PIXEL in the gray scale version of pittsburgh.png is at
+	 row: 604 x col: 1290. Its value is: 5
+12. There are 11 pixels == 6 in the grayscale image
