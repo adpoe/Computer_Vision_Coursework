@@ -1,6 +1,6 @@
 function [ output_val ] = fib_n( n )
 % Returns the n-th fibonnaci number for input n
-%   Recursively enerate each fibonnaci number up to n, and return it
+%   Recursively generate each fibonnaci number up to n, and return it
 if n <= 0
     output_val = 0;
 elseif n <= 2

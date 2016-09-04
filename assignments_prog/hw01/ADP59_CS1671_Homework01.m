@@ -623,3 +623,17 @@ disp('---------- END PROBLEM #20 ------------')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%
+
+
+%%
+%%%%%%%%%%%%%%%%%%
+% (21) Create another script which reads in an image. 
+% It computes the scalar average pixel value along each channel (R, G, B) separately.
+% It then subtracts the average value per channel from the corresponding channel. 
+% Finally, it writes the image to a file mean_sub.png.
+
+
+% SEE:  script in "mean_sub.m"
+
+
+%%
