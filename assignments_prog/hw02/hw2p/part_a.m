@@ -14,6 +14,12 @@
 % (use B = imresize(A, [numrows numcols])). Display the outputs, save them, 
 % and submit them.
 
+
+%%%%%%%%%%%%%%%%
+%%%% PRAGUE %%%%
+%%%%%%%%%%%%%%%%
+% NOTES: Takes about 2-minutes to run on my computer
+
 % Generate the energy image for prague.jpg
 im = imread('prague.jpg');
 energyImage = energy_image(im);
@@ -27,15 +33,16 @@ prague_resize_standard = imresize(im, [numrows numcols]);
 figure; imshow(prague_resize_standard);
 saveas(gcf, 'prague_standard_resize.jpg');
 
-[ pragueReducedRGB, pragueReducedEnergy ] = reduceHeight( im, energyImage);
+
 % shrink the prague image by 100px
-
-
-[ pragueReducedRGB, pragueReducedEnergy ] = reduceWidth( im, energyImage);
+% re-size mall.jpg with seam carving
+[ pragueReducedRGB, pragueReducedEnergy ] = reduceHeight( im, energyImage);
+for x=1:99
+    [ pragueReducedRGB, pragueReducedEnergy ] = reduceHeight( pragueReducedRGB, pragueReducedEnergy);
+end
 figure; imshow(pragueReducedRGB);
-
-figure; imshow(im);
 saveas(gcf, 'prague_seam_carving_resize.jpg');
+
 
 %%%%%%%%%%%%%%%
 %%%% MALL %%%%%

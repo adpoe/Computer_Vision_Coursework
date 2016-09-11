@@ -18,25 +18,30 @@ horizontalSeam = find_optimal_horizontal_seam(M);
 
 % first define a matrix that is 1 row SMALLER than than input,
 % i.e --> (N-1)xM
-condition_met = 0;
+
 reducedEnergyImage = zeros(size(energyImage,1)-1, (size(energyImage,2)) );
 % Then copy over everyting from previous, full sized energyImage....
 % EXCEPT the one row where the y-value we are iterating over
 % is the row we have stored in our horizontalSeam
- for y = 1:(size(energyImage,1)-1)
-   for x = 1:(size(horizontalSeam, 1))
-       % don't copy the horizontaalSeam over to our new matrix
-       if y ~= horizontalSeam(x)
-           % BUT copy everything else...
+for x = 1:(size(horizontalSeam, 1))
+   y_found = false;  
+   for y = 1:(size(energyImage,1)-1)
+       % don't copy the horizontalSeam over to our new matrix
+       if y == horizontalSeam(x)
+           y_found = true;
+       end
+       
+       if y_found == false
            reducedEnergyImage(y,x) = energyImage(y,x);
        else
-           condition_met = condition_met + 1;
-       end   
+           reducedEnergyImage(y,x) = energyImage(y+1,x);
+       end
    end
  end
 
  % at the end, this yields a matrix that is (N-1)xM and has the
  % horizontalSeam removed from it. 
+ % figure; imshow(reducedEnergyImage);
  
 %%%%%%%%%%%%%
 %%%% END %%%%
@@ -50,8 +55,6 @@ reducedEnergyImage = zeros(size(energyImage,1)-1, (size(energyImage,2)) );
 
 % first define a matrix that is 1 row SMALLER than than input,
 % i.e --> (N-1)xMx3
-condition_met = 0;
-
 
 %%%%%%%%%%%%%
 %%%% RED %%%%
@@ -61,62 +64,74 @@ reducedColorImage = zeros((size(im,1)-1), size(im,2), 3);
 % Then copy over everyting from previous, full sized energyImage....
 % EXCEPT the one row where the y-value we are iterating over
 % is the row we have stored in our horizontalSeam
- for y = 1:(size(energyImage,1)-1)
-   for x = 1:(size(horizontalSeam, 1))
+ for x = 1:(size(horizontalSeam, 1))
+   y_found = false;
+   for y = 1:(size(energyImage,1)-1)
        % don't copy the verticalSeam over to our new matrix
-       if y ~= horizontalSeam(x)
-          % BUT copy everything else...
+       if y == horizontalSeam(x)
+           y_found = true;
+       end
+       
+       if y_found == false
            reducedColorImage(y,x,1) = im(y,x,1);
-       else 
-           condition_met = condition_met + 1;
-       end   
+       else
+           reducedColorImage(y,x,1) = im(y+1,x,1);
+       end
    end
  end
  reducedColorImage = uint8(reducedColorImage);
  % at the end, this yields a matrix that is Nx(M-1)x3 and has the
- % verticalSeam removed from it. 
+ % horizontalSeam removed from it. 
  
  %%%%%%%%%%%%%%%
  %%%% GREEN %%%%
  %%%%%%%%%%%%%%%
-% Copy over everyting from previous, full sized reducedColorImage....
+% Then copy over everyting from previous, full sized energyImage....
 % EXCEPT the one row where the y-value we are iterating over
 % is the row we have stored in our horizontalSeam
- for y = 1:(size(energyImage,1)-1)
-   for x = 1:(size(horizontalSeam, 1))
+ for x = 1:(size(horizontalSeam, 1)) 
+   y_found = false;
+    for y = 1:(size(energyImage,1)-1)
        % don't copy the verticalSeam over to our new matrix
-       if y ~= horizontalSeam(x)
-          % BUT copy everything else...
+       if y == horizontalSeam(x)
+           y_found = true;
+       end
+       
+       if y_found == false
            reducedColorImage(y,x,2) = im(y,x,2);
-       else 
-           condition_met = condition_met + 1;
-       end   
+       else
+           reducedColorImage(y,x,2) = im(y+1,x,2);
+       end
    end
  end
  reducedColorImage = uint8(reducedColorImage);
  % at the end, this yields a matrix that is Nx(M-1)x3 and has the
- % verticalSeam removed from it. 
+ % horizontalSeam removed from it. 
  
  %%%%%%%%%%%%%%
  %%%% BLUE %%%%
  %%%%%%%%%%%%%%
-% Copy over everyting from previous, full sized reducedColorImage....
+% Then copy over everyting from previous, full sized energyImage....
 % EXCEPT the one row where the y-value we are iterating over
 % is the row we have stored in our horizontalSeam
- for y = 1:(size(energyImage,1)-1)
-   for x = 1:(size(horizontalSeam, 1))
+ for x = 1:(size(horizontalSeam, 1))
+   y_found = false;
+   for y = 1:(size(energyImage,1)-1)
        % don't copy the verticalSeam over to our new matrix
-       if y ~= horizontalSeam(x)
-          % BUT copy everything else...
+       if y == horizontalSeam(x)
+           y_found = true;
+       end
+       
+       if y_found == false
            reducedColorImage(y,x,3) = im(y,x,3);
-       else 
-           condition_met = condition_met + 1;
-       end   
+       else
+           reducedColorImage(y,x,3) = im(y+1,x,3);
+       end
    end
  end
  reducedColorImage = uint8(reducedColorImage);
  % at the end, this yields a matrix that is Nx(M-1)x3 and has the
- % verticalSeam removed from it. 
+ % horizontalSeam removed from it. 
  
 %%%%%%%%%%%%%
 %%%% END %%%%
