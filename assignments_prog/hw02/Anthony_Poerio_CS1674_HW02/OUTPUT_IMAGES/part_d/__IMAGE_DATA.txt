@@ -1,0 +1,38 @@
+
+# IMAGE D1:
+the original input image:   "D_1_Image_Original.jpg"
+your system's resized image:  "D_1_seam_carving_resize.jpg"
+the result one would get if instead a simple resampling were used (via Matlab's imresize):  "D_1_standard_resize.jpg"
+the input and output image dimensions:  Input 708x945 --> Output 508x945
+the sequence of enlargements and removals that were used:   reduceHeight by 200px
+a qualitative explanation of what we're seeing in the output: Removes area from clouds instead of shrinking image non-uniformly and distorting it. The images in the clouds are one uniform color, so we can carve out those seams efficiently. The information is redundant.
+
+# IMAGE D2:
+the original input image:   "D_2_Image_Original.jpg"
+your system's resized image:  "D_2_seam_carving_resize.jpg"
+the result one would get if instead a simple resampling were used (via Matlab's imresize):  "D_2_standard_resize.jpg"
+the input and output image dimensions:  Input 1424x1900 --> Output 974x1900
+the sequence of enlargements and removals that were used:   reduceWidth by 200px
+a qualitative explanation of what we're seeing in the output: Removes the redundant information **within** each column of purple flowers.
+
+# IMAGE D3:
+the original input image:   "D_3_Image_Original.jpg"
+your system's resized image:  "D_3_seam_carving_resize.jpg"
+the result one would get if instead a simple resampling were used (via Matlab's imresize):  "D_3_standard_resize.jpg"
+the input and output image dimensions:  Input 1254x1536 --> Output 1054x1086
+the sequence of enlargements and removals that were used:   1) reduceHeight 200; 2) reduceWidth by 450px
+a qualitative explanation of what we're seeing in the output:  This is an image of Picasso's painting, Blue Room. This image re-sizes badly because the image is complex, and the lines are not hard edges, but rather loose brush strokes. Moreover this image is from Picasso's blue period, and the overall color palette of the image is roughly uniform--blue hues. Picasso's work plays tricks on the eyes, and he plays with proportions, foreshortening, etc., in intricate ways. Because of this, the image becomes warped in strange ways  after a seam carving re-size.
+
+# IMAGE D4:
+the original input image:   "D_4_Image_Original.jpg"
+your system's resized image:  "D_4_seam_carving_resize.jpg"
+the result one would get if instead a simple resampling were used (via Matlab's imresize):  "D_4_standard_resize.jpg"
+the input and output image dimensions:  Input 480x640 --> Output 280x540
+the sequence of enlargements and removals that were used:   1) reduceWidth by 100px; 2) reduceHeight by 200px
+a qualitative explanation of what we're seeing in the output: Removes the redundant information **within** each column of purple flowers.
+
+
+
+
+
+

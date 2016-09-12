@@ -9,9 +9,7 @@ function [ reducedColorImage, reducedEnergyImage ] = reduceHeight( im, energyIma
 M = cumulative_minimum_energy_map(energyImage, 'HORIZONTAL');
 horizontalSeam = find_optimal_horizontal_seam(M);
 
-% TODO:   TRANSLATE THIS TO WORK HORIZTONALLY, THEN PRODUCE IMAGE OUTPUTS
-
-% So Using another method. THIS WORKS... BUT SLOW
+% THIS WORKS... BUT SLOW
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% REMOVE 1-COL FROM ENERGY_IMAGE  %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -8,14 +8,6 @@ function [ reducedColorImage, reducedEnergyImage ] = reduceWidth( im, energyImag
 %   reducedEnergyImage = 2D matrix of type double, same the same as
 %   energyImage but with the width reduce by 1px
 
-% remove rows or cols by setting them to the empty vector, []
-% ---> Kept getting errors when trying to use the empty vector, like this:
-% rm = energyImage;
-% x_axis = 1:size(energyImage,2);
-% rm(verticalSeam,x_axis) = [];
-% ----> ERROR:   "A null assignment can have only one non-colon index."
-% But I can set everything in that column to a value without issue...
-
 
 
 % First, find our Vertical Seam
@@ -29,7 +21,7 @@ verticalSeam = find_optimal_vertical_seam(N);
 
 % first define a matrix that is 1 column SMALLER than than input,
 % i.e --> Nx(M-1)
-condition_met = 0;
+
 
 reducedEnergyImage = zeros(size(energyImage,1), (size(energyImage,2)-1) );
 % Then copy over everyting from previous, full sized energyImage....
