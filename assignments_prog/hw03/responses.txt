@@ -1,0 +1,61 @@
+# Anthony Poerio (adp59@pitt.edu)
+## University of Pittsburgh
+## responses.txt for Homework03
+## CS1674 - Computer Vision
+## Fall 2016
+
+
+### Questions
+
+4. Mean of Euclidean Distance between categories:
+    Data:
+        - WITHIN-CATEGORY DISTANCE MEAN = 1.065550e+06
+        - BETWEEN-CATEGORY DISTANCE MEAN = 1.172625e+06
+            * Between-Category Distance mean is LARGER
+    
+    Analysis:
+        - In this context --> a LARGER mean signifies that the images had more *dissimilar* responses to our set of filters.
+        - That is, when the mean is larger, then images are LESS alike, according to our filter responses.
+        - Here, we can see that the mean **between-categories** is GREATER than the mean **within-categories**.
+        - This is indeed what I would expect, because within-category images SHOULD have *more similar* responses to our filters, overall.
+        
+        
+7. Mean Across All 48 filters Individually
+    Data:
+        - WITHIN-CATEGORY DISTANCE MEAN  = 4.992002e+00
+        - BETWEEN-CATEGORY DISTANCE MEAN = 1.156995e+01
+            * Again, Between-Category Distance mean is LARGER
+            
+    Analysis:
+        - Comparison --> Here, the total values are MUCH smaller, but we have same result: Between-Category means are still LARGER
+        - Expectations --> This is in line with what I would expect, personally. I don't see why taking the aggregate means (as in Q6) would necessarily
+        yield a different result than evaluating each mean **individually** (as in Q7). However, I did expect that the **between-category** means would
+        be LARGER than the **within-category** means, overall.
+            * So: this is not MORE in line with what I would expect, it is just what I would expect, overall, in BOTH instances.
+
+8. Mean Across Pixel Representations
+    Data:
+        - WITHIN-CATEGORY DISTANCE MEAN = 3.671682e+04
+        - BETWEEN-CATEGORY DISTANCE MEAN = 4.316043e+04
+
+    Analysis:
+        - Again, *between-category* distances are larger than *within* category distances, as expected. 
+
+
+9.   Which of the three types of descriptors that you used is the best one?
+        - Of the three descriptors, I think that the **technique used in #7** --> comparing the means of each filter's response individually is the best.
+        
+     How can you tell? Include your reasoning in your response.
+        - I can tell this because the result is in-line with both: my own expectations, AND it confirms the results found in each of the other tests, but with greater sensitivity.
+        Specifically, it confirms that the *between-category* vectors are MORE DIFFERENT, on average, than **within-category** vectors.
+        - Moreover, it confirms these results with a difference between the categories that is a __full_order_of_magnitude__ in size.
+        - Again, for #7, here's our data:
+            * WITHIN-CATEGORY DISTANCE MEAN  = 4.992002e+00
+            * BETWEEN-CATEGORY DISTANCE MEAN = 1.156995e+01
+                --> As we can see, the expected result is confirmed, but with a MUCH higher difference in magnitude between the resulting averages.
+        - Beyond that, I think this test is beneficial by taking the average of MORE data points total than #6.  (There are 48 different filters in #7, each
+        analyzed individually).
+            * AND the those data points are MORE MEANINGFUL than the representation used in #8 (total pixel values, which in and of themselves may be misleading, 
+            and would only really be similar if we had images of the same animal at the same level of detail.)
+
+
