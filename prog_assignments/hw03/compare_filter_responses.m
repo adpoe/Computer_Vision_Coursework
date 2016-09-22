@@ -42,10 +42,6 @@ for y = 1:size(ImageNames, 1)
     end
 end
 
-% Note: Not sure why this conversion was done... I followed the directions
-% (at least as I interpreted them), and didn't use the 512x512 images. I
-% read in the images in Q3 and re-sized them, as specified....
-
 
 
 
@@ -86,7 +82,7 @@ for y = 1:size(ImageNames, 1)
         I = double(I);
         
         % >>> CONVERT TO 3/4 size
-        resize = imresize(I, 0.75);
+        resize = imresize(I, [512,512]);
         %resize = imresize(I, 1.0);
         
         % put result in ImageArray, at same index
@@ -115,7 +111,7 @@ end
 % for three of the six images, show the response to each filter,
 % using subplots
 
-
+Nums = [1:48];
 % Show response to each filter using sublots for three images
 count = 1;
 ImageList = ImageArrays(:);
@@ -298,6 +294,7 @@ between_cat_distance_vectors = unique(between_cat_distance_vectors);
 mean_within_cat = mean(within_cat_distance_vectors);
 mean_between_cat = mean(between_cat_distance_vectors);
 
+disp('6.--------- MEAN TAKING WHOLE FILTER INTO ACCOUNT ------');
 fprintf('WITHIN-CATEGORY DISTANCE MEAN = %u\n', mean_within_cat);
 fprintf('BETWEEN-CATEGORY DISTANCE MEAN = %u\n', mean_between_cat);
 

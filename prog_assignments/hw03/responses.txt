@@ -9,8 +9,8 @@
 
 4. Mean of Euclidean Distance between categories:
     Data:
-        - WITHIN-CATEGORY DISTANCE MEAN = 1.065550e+06
-        - BETWEEN-CATEGORY DISTANCE MEAN = 1.172625e+06
+        - WITHIN-CATEGORY DISTANCE MEAN = 1.907165e+05
+        - BETWEEN-CATEGORY DISTANCE MEAN = 2.329144e+05
             * Between-Category Distance mean is LARGER
     
     Analysis:
@@ -22,10 +22,9 @@
         
 7. Mean Across All 48 filters Individually
     Data:
-        - WITHIN-CATEGORY DISTANCE MEAN  = 4.992002e+00
-        - BETWEEN-CATEGORY DISTANCE MEAN = 1.156995e+01
+        - WITHIN-CATEGORY DISTANCE MEAN = 7.052572e-01
+        - BETWEEN-CATEGORY DISTANCE MEAN = 2.881734e+00
             * Again, Between-Category Distance mean is LARGER
-            
     Analysis:
         - Comparison --> Here, the total values are MUCH smaller, but we have same result: Between-Category means are still LARGER
         - Expectations --> This is in line with what I would expect, personally. I don't see why taking the aggregate means (as in Q6) would necessarily
@@ -35,11 +34,10 @@
 
 8. Mean Across Pixel Representations
     Data:
-        - WITHIN-CATEGORY DISTANCE MEAN = 3.671682e+04
-        - BETWEEN-CATEGORY DISTANCE MEAN = 4.316043e+04
-
+        - WITHIN-CATEGORY DISTANCE MEAN = 8.165404e+03
+        - BETWEEN-CATEGORY DISTANCE MEAN = 1.323535e+04
     Analysis:
-        - Again, *between-category* distances are larger than *within* category distances, as expected. 
+        - Again, *between-category* distances are larger than *within* category distances, as expected.
 
 
 9.   Which of the three types of descriptors that you used is the best one?
@@ -50,8 +48,8 @@
         Specifically, it confirms that the *between-category* vectors are MORE DIFFERENT, on average, than **within-category** vectors.
         - Moreover, it confirms these results with a difference between the categories that is a __full_order_of_magnitude__ in size.
         - Again, for #7, here's our data:
-            * WITHIN-CATEGORY DISTANCE MEAN  = 4.992002e+00
-            * BETWEEN-CATEGORY DISTANCE MEAN = 1.156995e+01
+            * WITHIN-CATEGORY DISTANCE MEAN = 7.052572e-01
+            * BETWEEN-CATEGORY DISTANCE MEAN = 2.881734e+00
                 --> As we can see, the expected result is confirmed, but with a MUCH higher difference in magnitude between the resulting averages.
         - Beyond that, I think this test is beneficial by taking the average of MORE data points total than #6.  (There are 48 different filters in #7, each
         analyzed individually).
