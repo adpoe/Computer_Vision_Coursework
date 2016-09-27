@@ -38,9 +38,9 @@ saveas(gcf,'hw04_rainbow_corners.png');
 hold off
 
 
-% (3)Lightning.jpg
-image = imread('Lightning.jpg');
-image = imresize(image, 0.60);
+% (3) pearl_earring.jpg
+image = imread('pearl_earring.jpg');
+image = imresize(image, 0.66);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
 figure; imshow(image) 
 hold on
@@ -48,7 +48,7 @@ for i = 1:size(scores,2)
     plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
     
 end
-saveas(gcf,'hw04_lightning_corners.png');
+saveas(gcf,'hw04_pearl_earing_corners.png');
 hold off
 
 % (4) Prague.jpg

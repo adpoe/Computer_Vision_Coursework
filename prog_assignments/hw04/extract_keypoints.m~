@@ -15,7 +15,7 @@ function [ x, y, scores, Ix, Iy ] = extract_keypoints( image )
 %            input image, storing the gradients in the y-direction at each
 %            pixel
 
-image = imread('prague.jpg');
+%image = imread('prague.jpg');
 % compute the gradients, re-use code from HW2P, use window size of 5px
 % convert image to grayscale first
 G = rgb2gray(image);
@@ -39,9 +39,9 @@ Ix = filtered_x;
 Iy = filtered_y;
 
 % Compute the values we need for the matrix
-%Ixy = Ix .* Iy;
-%Iy2 = Iy .^ 2;
-%Ix2 = Ix .^2;
+Ixy = Ix .* Iy;
+Iy2 = Iy .^ 2;
+Ix2 = Ix .^2;
 
 % I get negative values, unless I apply gaussian filters to our Ixy, Iy2
 % % and Ix2 values.... 
@@ -66,7 +66,7 @@ num_cols = size(image,2);
 H = zeros(num_rows, num_cols);
 H1 = zeros(num_rows, num_cols);
 
-% get our matrix M for each pixel
+% % get our matrix M for each pixel
 for y = 1:size(image,1)
     for x = 1:size(image,2)
         % build a matrix using what we computed earlier
@@ -87,29 +87,52 @@ for y = 1:size(image,1)
     end
 end
 
-% Try alternate computation for R
-% from: http://slazebni.cs.illinois.edu/spring16/harris.m
-H1 = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps); % Harris corner measure
+%Try alternate computation for R
+%from: http://slazebni.cs.illinois.edu/spring16/harris.m
+%H1 = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps); % Harris corner measure
 
 
 % set threshold of 'cornerness' to 5 times average R score
 avg_r = mean(mean(H))
-threshold = 5 * avg_r
+threshold = abs(5 * avg_r)
 
+[row, col] = find(H > threshold1);
 
-avg_r1 = mean(mean(H1))
-threshold1 = 5 * avg_r1
-
-[row, col] = find(H1 > threshold1);
-
-% get all the values
-for index = 1:size(y,1)
-    r = 
-    scores(index) = H1(row(index), col(index));
+get all the values
+for index = 1:size(row,1)
+    see what the values are
+    r = row(index);
+    c = col(index);
+    
+    store the scores
+    scores(index) = H(r,c);
 end
 
-values = find(H1 > threshold1);
-value = H1(row(1), col(1))
+y = row;
+x = col;
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%% CODE FOR H1 %%%%
+%%%%%%%%%%%%%%%%%%%%%
+% avg_r1 = mean(mean(H1));
+% threshold1 = 5 * avg_r1;
+% 
+% [row, col] = find(H1 > threshold1);
+% 
+% get all the values
+% for index = 1:size(row,1)
+%     see what the values are
+%     r = row(index);
+%     c = col(index);
+%     
+%     store the scores
+%     scores(index) = H1(r,c);
+% end
+% 
+% y = row;
+% x = col;
+% 
 
 % find top 1% of values
 n = size(H(:),1);
@@ -149,10 +172,10 @@ end
 % This needs to be LAST
 % http://stackoverflow.com/questions/1856197/how-can-i-find-local-maxima-in-an-image-in-matlab
 % non max suppression
-Max_Suppressed_H = H > imdilate(H, [1 1 1; 1 0 1; 1 1 1]);
+%Max_Suppressed_H = H > imdilate(H, [1 1 1; 1 0 1; 1 1 1]);
 
 % OR: http://www.mathworks.com/help/images/ref/imregionalmax.html
-BW = imregionalmax(H);
+%BW = imregionalmax(H);
 
 
 end

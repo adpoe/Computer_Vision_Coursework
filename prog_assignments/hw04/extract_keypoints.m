@@ -23,12 +23,9 @@ G = rgb2gray(image);
 % convert to double
 G2 = im2double(G);
 
-% create X and Y filters
+% create X and Y Sobel filters
 horizontal_filter = [1 0 -1; 2 0 -2; 1 0 -1];
 vertical_filter = [1 2 1; 0 0 0 ; -1 -2 -1];
-
-%horizontal_filter = [1 0 -1; 1 0 -1; 1 0 -1];
-%vertical_filter = horizontal_filter';
 
 % using imfilter to get our gradient in each direction
 filtered_x = imfilter(G2, horizontal_filter);
@@ -38,19 +35,9 @@ filtered_y = imfilter(G2, vertical_filter);
 Ix = filtered_x;
 Iy = filtered_y;
 
-% Compute the values we need for the matrix
-%Ixy = Ix .* Iy;
-%Iy2 = Iy .^ 2;
-%Ix2 = Ix .^2;
-
-% I get negative values, unless I apply gaussian filters to our Ixy, Iy2
-% % and Ix2 values.... 
-% g = fspecial('gaussian');
-% Ix2= conv2 (Ix.^2, g, 'same');
-% Iy2= conv2 (Iy.^2, g, 'same');
-% Ixy= conv2 (Ix.*Iy, g, 'same');
-
-% try with filter, not conv
+% Compute the values we need for the matrix...
+% Using a gaussian blur, because I get more positive values after applying
+% it, my values all skew negative for some reason...
 f = fspecial('gaussian');
 Ix2 = imfilter(Ix.^2, f);
 Iy2 = imfilter(Iy.^2, f);
@@ -64,97 +51,60 @@ num_cols = size(image,2);
 
 % create a matrix to hold the Harris values
 H = zeros(num_rows, num_cols);
-H1 = zeros(num_rows, num_cols);
 
 % % get our matrix M for each pixel
-% for y = 1:size(image,1)
-%     for x = 1:size(image,2)
-%         % build a matrix using what we computed earlier
-%         M = zeros(2,2);
-%         M(1,1) = Ix2(y,x);
-%         M(2,1) = Ixy(y,x);
-%         M(1,2) = Ixy(y,x);
-%         M(2,2) = Iy2(y,x);
-%         
-%         % compute R, using te matrix we just created
-%         R = det(M) - ( k * trace(M)^2 );
-%         %alt
-%         %R = (Ix2.*Iy2 - Ixy.^2) - k(Ix2+Iy2).^2;
-%         
-%         % store the R values in our Harris Matrix
-%         H(y,x) = R;
-%        
-%     end
-% end
+for y = 1:size(image,1)
+    for x = 1:size(image,2)
+        % build a matrix using what we computed earlier
+        M = zeros(2,2);
+        M(1,1) = Ix2(y,x);
+        M(2,1) = Ixy(y,x);
+        M(1,2) = Ixy(y,x);
+        M(2,2) = Iy2(y,x);
+        
+        % compute R, using te matrix we just created
+        R = det(M) - ( k * trace(M)^2 );
+        %alt
+        %R = (Ix2.*Iy2 - Ixy.^2) - k(Ix2+Iy2).^2;
+        
+        % store the R values in our Harris Matrix
+        H(y,x) = R;
+       
+    end
+end
 
-% Try alternate computation for R
-% from: http://slazebni.cs.illinois.edu/spring16/harris.m
-H1 = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps); % Harris corner measure
+%Try alternate computation for R
+%from: http://slazebni.cs.illinois.edu/spring16/harris.m
+%H1 = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps); % Harris corner measure
 
 
-% % set threshold of 'cornerness' to 5 times average R score
-% avg_r = mean(mean(H))
-% threshold = 5 * avg_r
+% set threshold of 'cornerness' to 5 times average R score
+avg_r = mean(mean(H))
+threshold = abs(5 * avg_r)
 
-avg_r1 = mean(mean(H1));
-threshold1 = 5 * avg_r1;
+[row, col] = find(H > threshold);
 
-[row, col] = find(H1 > threshold1);
 
-% get all the values
+%get all the values
 for index = 1:size(row,1)
-    % see what the values are
+    %see what the values are
     r = row(index);
     c = col(index);
     
-    % store the scores
-    scores(index) = H1(r,c);
+    %store the scores
+    scores(index) = H(r,c);
 end
 
 y = row;
 x = col;
 
-% 
-% % find top 1% of values
-% n = size(H(:),1);
-% m = n * 0.01;
-% 
-% %[sortedValues, sortedIndex] = sort(Max_Suppressed_H(:), 'descend');
-% %maxIndex = sortedIndex(1:m);
-% %scores = sortedValues(1:m);
-% 
-% % sort the values and get the largest m values that make up the 1%
-% sortedValues = unique(H(:));          
-% maxValues = sortedValues(end-m:end);
-% maxIndex = ismember(H,maxValues); 
-% 
-% 
-% % get indices of all 1's
-% [y, x] = find(maxIndex == 1);
-% indices = [y,x];
-% size(indices);
-% 
-% 
-% % get the scores, so we can return them
-% scores = zeros(size(y));
-% for index = 1:size(indices,1)
-%     % find the score at each value in our matrix
-%     y_index = y(index,1);
-%     x_index = x(index,1);
-%     
-%     % get the actual value of each score
-%     scr = H(y_index, x_index);
-%     
-%     % store each score in the scores vector
-%     scores(index,1) = scr;
-% end
-% 
 
 % This needs to be LAST
 % http://stackoverflow.com/questions/1856197/how-can-i-find-local-maxima-in-an-image-in-matlab
 % non max suppression
 %Max_Suppressed_H = H > imdilate(H, [1 1 1; 1 0 1; 1 1 1]);
 
+% if index isn't one, remove it....
 % OR: http://www.mathworks.com/help/images/ref/imregionalmax.html
 %BW = imregionalmax(H);
 
