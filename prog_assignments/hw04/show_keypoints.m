@@ -5,8 +5,11 @@
 % CS1674 - Computer Vision
 % Programming Assignment #4
 % Fall 2016 
-%
 % Show Keypoints for 10 different pictures
+% --> Pictures displayed and keypoints extracted based on 'cornerness',
+% using the Harris Corner Detector Algorithm
+% --> Features for each corner determined using the SIFT algorithm for
+% Scale Invariant Feature Extraction
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%% (1) Pittsburgh.png %%%%%%%%%%%%%
@@ -17,7 +20,7 @@ figure; imshow(image)
 hold on
 for i = 1:size(scores,2)
     %plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 1000000000);
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 100);
     
 end
 saveas(gcf,'hw04_pittsburgh_corners.png');
@@ -27,6 +30,8 @@ hold off
 [ pgh_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
 %%%%%%%%%% (2) Rainbow.jpg %%%%%%%%%%%%
 image = imread('Rainbow.jpg');
 image = imresize(image, 0.5);
@@ -34,7 +39,7 @@ image = imresize(image, 0.5);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i)/1000 );
     
 end
 saveas(gcf,'hw04_rainbow_corners.png');
@@ -45,21 +50,21 @@ hold off
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%% (3) pearl_earring.jpg  %%%%%%%%%%
-image = imread('pearl_earring.jpg');
-image = imresize(image, 0.66);
+%%%%%%%%%% (3) leopard2.jpg  %%%%%%%%%% 
+image = imread('leopard2.jpg');
+image = imresize(image, 0.5);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 100 );
     
 end
-saveas(gcf,'hw04_pearl_earing_corners.png');
+saveas(gcf,'hw04_leopard2_earing_corners.png');
 hold off
 
 % get the feature descriptors via SIFT
-[ pearl_earring_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
+[ leopard2_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -70,7 +75,7 @@ image = imresize(image, 0.75);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /10000000 );
     
 end
 saveas(gcf,'hw04_prague_corners.png');
@@ -88,7 +93,7 @@ image = imresize(image, 0.5);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /10000 );
     
 end
 saveas(gcf,'hw04_provence_corners.png');
@@ -106,7 +111,7 @@ image = imresize(image, 0.7);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 100 );
     
 end
 saveas(gcf,'hw04_circuit_corners.png');
@@ -124,7 +129,7 @@ image = imresize(image, 0.25);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 10000 );
     
 end
 saveas(gcf,'hw04_vermeer_corners.png');
@@ -134,55 +139,54 @@ hold off
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%% (8) Mountains.jpg %%%%%%%%%%%%%%
-image = imread('Mountains.jpg');
-image = imresize(image, 0.70);
+%%%%%%%%%%%% (8) eiffel.jpg %%%%%%%%%%%%%% 
+image = imread('eiffel.jpg');
+image = imresize(image, 1);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
-    
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i)/100 );
 end
-saveas(gcf,'hw04_mountains_corners.png');
+saveas(gcf,'hw04_eiffel_corners.png');
 hold off
 % get the feature descriptors via SIFT
-[ mountains_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
+[ eiffel_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-%%%%%%%%%%%% (9) VAN_EYCK.jpg %%%%%%%%%%%%%%%%
-image = imread('VAN_EYCK.jpg');
-image = imresize(image, 0.50);
+%%%%%%%%%%%% (9) leopard1.jpg %%%%%%%%%%%%%%%% 
+image = imread('leopard1.jpg');
+image = imresize(image, 0.75);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /100 );
     
 end
-saveas(gcf,'hw04_van_eyck_corners.png');
+saveas(gcf,'hw04_leopard1_corners.png');
 hold off
 % get the feature descriptors via SIFT
-[ van_eyck_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
+[ leopard1_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-%%%%%%%%%%%% (10) dali.jpg %%%%%%%%%%%%%%
-image = imread('dali.jpg');
+%%%%%%%%%%%% (10) panda1.jpg %%%%%%%%%%%%%%  
+image = imread('panda1.jpg');
 image = imresize(image, 0.66);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /1000 );
     
 end
-saveas(gcf,'hw04_dali_corners.png');
+saveas(gcf,'hw04_panda1_corners.png');
 hold off
 
 % get the feature descriptors via SIFT
-[ dali_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
+[ panda_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

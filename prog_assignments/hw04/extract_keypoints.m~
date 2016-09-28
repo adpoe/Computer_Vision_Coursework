@@ -53,14 +53,20 @@ num_cols = size(image,2);
 H = zeros(num_rows, num_cols);
 
 % % get our matrix M for each pixel
-for y = 1:size(image,1)
-    for x = 1:size(image,2)
+for y = 6:size(image,1)-6
+    for x = 6:size(image,2)-6
         % build a matrix using what we computed earlier
         M = zeros(2,2);
         M(1,1) = Ix2(y,x);
         M(2,1) = Ixy(y,x);
         M(1,2) = Ixy(y,x);
         M(2,2) = Iy2(y,x);
+        
+        
+        Matrix = [Ix2(y-5:y+5,x-5:x+5), Ixy(y-5:y+5,x-5:x+5); 
+                  Ixy(y-5:y+5,x-5:x+5), Iy2(y-5:y+5,x-5:x+5)];
+        R1 = det(Matrix) - (k * trace(M)^2);
+        
         
         % compute R, using te matrix we just created
         R = det(M) - ( k * trace(M)^2 );
@@ -69,6 +75,8 @@ for y = 1:size(image,1)
         
         % store the R values in our Harris Matrix
         H(y,x) = R;
+        
+        H(y,x) = R1;
        
     end
 end
@@ -79,12 +87,13 @@ end
 
 
 % set threshold of 'cornerness' to 5 times average R score
-avg_r = mean(mean(H));
-threshold = abs(5 * avg_r);
+avg_r = mean(mean(H))
+threshold = abs(5 * avg_r)
 
 [row, col] = find(H > threshold);
 
 
+scores = zeros(size(H));
 %get all the values
 for index = 1:size(row,1)
     %see what the values are
@@ -97,6 +106,7 @@ end
 
 y = row;
 x = col;
+
 
 
 % This needs to be LAST

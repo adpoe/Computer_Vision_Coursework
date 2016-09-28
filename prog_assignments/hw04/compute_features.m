@@ -11,6 +11,7 @@ function [ features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy )
 %       d-dimensional descriptors for the nth keypoint
 %       - also return: same x, y, and scores values as are passed in
 
+
 grad_mag = zeros(size(Ix));
 grad_orient = zeros(size(Ix));
 

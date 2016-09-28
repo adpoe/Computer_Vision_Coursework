@@ -15,7 +15,6 @@ function [ x, y, scores, Ix, Iy ] = extract_keypoints( image )
 %            input image, storing the gradients in the y-direction at each
 %            pixel
 
-%image = imread('prague.jpg');
 % compute the gradients, re-use code from HW2P, use window size of 5px
 % convert image to grayscale first
 G = rgb2gray(image);
@@ -53,38 +52,42 @@ num_cols = size(image,2);
 H = zeros(num_rows, num_cols);
 
 % % get our matrix M for each pixel
-for y = 1:size(image,1)
-    for x = 1:size(image,2)
+for y = 6:size(image,1)-6
+    for x = 6:size(image,2)-6
         % build a matrix using what we computed earlier
-        M = zeros(2,2);
-        M(1,1) = Ix2(y,x);
-        M(2,1) = Ixy(y,x);
-        M(1,2) = Ixy(y,x);
-        M(2,2) = Iy2(y,x);
+%         M = zeros(2,2);
+%         M(1,1) = Ix2(y,x);
+%         M(2,1) = Ixy(y,x);
+%         M(1,2) = Ixy(y,x);
+%         M(2,2) = Iy2(y,x);
+%         
+        
+        Matrix = [Ix2(y-5:y+5,x-5:x+5), Ixy(y-5:y+5,x-5:x+5); 
+                  Ixy(y-5:y+5,x-5:x+5), Iy2(y-5:y+5,x-5:x+5)];
+        R1 = det(Matrix) - (k * trace(Matrix)^2);
+        
         
         % compute R, using te matrix we just created
-        R = det(M) - ( k * trace(M)^2 );
+        %R = det(M) - ( k * trace(M)^2 );
         %alt
         %R = (Ix2.*Iy2 - Ixy.^2) - k(Ix2+Iy2).^2;
         
         % store the R values in our Harris Matrix
-        H(y,x) = R;
+       
+        % H(y,x) = R;
+        
+        H(y,x) = R1;
        
     end
 end
 
-%Try alternate computation for R
-%from: http://slazebni.cs.illinois.edu/spring16/harris.m
-%H1 = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps); % Harris corner measure
-
-
 % set threshold of 'cornerness' to 5 times average R score
-avg_r = mean(mean(H));
-threshold = abs(5 * avg_r);
+avg_r = mean(mean(H))
+threshold = abs(5 * avg_r)
 
 [row, col] = find(H > threshold);
 
-
+scores = [];
 %get all the values
 for index = 1:size(row,1)
     %see what the values are
@@ -92,7 +95,8 @@ for index = 1:size(row,1)
     c = col(index);
     
     %store the scores
-    scores(index) = H(r,c);
+    %score(index) = H(r,c);
+    scores = cat(2, scores,H(r,c));
 end
 
 y = row;
