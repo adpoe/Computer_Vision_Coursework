@@ -116,7 +116,6 @@ hold off
 [ circuit_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 %%%%%%%%%%%% (7) vermeer.jpg %%%%%%%%%%%%%%%%
 image = imread('vermeer.jpg');
 image = imresize(image, 0.25);
@@ -129,12 +128,9 @@ for i = 1:size(scores,2)
 end
 saveas(gcf,'hw04_vermeer_corners.png');
 hold off
-% get the feature descriptors via SIFT
-[ vermeer_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%% (8) Mountains.jpg %%%%%%%%%%%%%%
+% (8) Mountains.jpg
 image = imread('Mountains.jpg');
 image = imresize(image, 0.70);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
@@ -146,13 +142,9 @@ for i = 1:size(scores,2)
 end
 saveas(gcf,'hw04_mountains_corners.png');
 hold off
-% get the feature descriptors via SIFT
-[ mountains_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-%%%%%%%%%%%% (9) VAN_EYCK.jpg %%%%%%%%%%%%%%%%
+% (9) VAN_EYCK.jpg
 image = imread('VAN_EYCK.jpg');
 image = imresize(image, 0.50);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
@@ -164,13 +156,9 @@ for i = 1:size(scores,2)
 end
 saveas(gcf,'hw04_van_eyck_corners.png');
 hold off
-% get the feature descriptors via SIFT
-[ van_eyck_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-%%%%%%%%%%%% (10) dali.jpg %%%%%%%%%%%%%%
+% (10) dali.jpg
 image = imread('dali.jpg');
 image = imresize(image, 0.66);
 [ x, y, scores, Ix, Iy ] = extract_keypoints( image );
@@ -182,7 +170,3 @@ for i = 1:size(scores,2)
 end
 saveas(gcf,'hw04_dali_corners.png');
 hold off
-
-% get the feature descriptors via SIFT
-[ dali_features, x, y, scores ] = compute_features( x, y, scores, Ix, Iy );
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

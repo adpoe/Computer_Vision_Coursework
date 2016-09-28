@@ -79,8 +79,8 @@ end
 
 
 % set threshold of 'cornerness' to 5 times average R score
-avg_r = mean(mean(H))
-threshold = abs(5 * avg_r)
+avg_r = mean(mean(H));
+threshold = abs(5 * avg_r);
 
 [row, col] = find(H > threshold);
 
@@ -100,13 +100,9 @@ x = col;
 
 
 % This needs to be LAST
-% http://stackoverflow.com/questions/1856197/how-can-i-find-local-maxima-in-an-image-in-matlab
 % non max suppression
-%Max_Suppressed_H = H > imdilate(H, [1 1 1; 1 0 1; 1 1 1]);
-
-% if index isn't one, remove it....
-% OR: http://www.mathworks.com/help/images/ref/imregionalmax.html
-%BW = imregionalmax(H);
+% http://www.mathworks.com/help/images/ref/imregionalmax.html
+% BW = imregionalmax(H);
 
 
 end
