@@ -20,7 +20,7 @@ figure; imshow(image)
 hold on
 for i = 1:size(scores,2)
     %plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 1000000000);
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 100);
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) * 5);
     
 end
 saveas(gcf,'hw04_pittsburgh_corners.png');
@@ -39,7 +39,7 @@ image = imresize(image, 0.5);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i)/1000 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) * 5 );
     
 end
 saveas(gcf,'hw04_rainbow_corners.png');
@@ -57,7 +57,7 @@ image = imresize(image, 0.5);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 100 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) * 5);
     
 end
 saveas(gcf,'hw04_leopard2_earing_corners.png');
@@ -75,7 +75,7 @@ image = imresize(image, 0.75);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /10000000 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) );
     
 end
 saveas(gcf,'hw04_prague_corners.png');
@@ -93,7 +93,7 @@ image = imresize(image, 0.5);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /10000 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) *5 );
     
 end
 saveas(gcf,'hw04_provence_corners.png');
@@ -111,7 +111,7 @@ image = imresize(image, 0.7);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 100 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i)  *5);
     
 end
 saveas(gcf,'hw04_circuit_corners.png');
@@ -129,7 +129,7 @@ image = imresize(image, 0.25);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) / 10000 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) *5);
     
 end
 saveas(gcf,'hw04_vermeer_corners.png');
@@ -146,7 +146,7 @@ image = imresize(image, 1);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i)/100 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) *5 );
 end
 saveas(gcf,'hw04_eiffel_corners.png');
 hold off
@@ -163,7 +163,7 @@ image = imresize(image, 0.75);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /100 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) *5);
     
 end
 saveas(gcf,'hw04_leopard1_corners.png');
@@ -181,7 +181,7 @@ image = imresize(image, 0.66);
 figure; imshow(image) 
 hold on
 for i = 1:size(scores,2)
-    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) /1000 );
+    plot(x(i), y(i), 'ro', 'MarkerSize', scores(i) *5 );
     
 end
 saveas(gcf,'hw04_panda1_corners.png');

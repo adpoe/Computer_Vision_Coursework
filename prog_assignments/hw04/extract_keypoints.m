@@ -60,10 +60,22 @@ for y = 6:size(image,1)-6
 %         M(2,1) = Ixy(y,x);
 %         M(1,2) = Ixy(y,x);
 %         M(2,2) = Iy2(y,x);
-%         
+%       
+        % calculate means
+        % Ix2 mean
+        Ix2_matrix = Ix2(y-2:y+2,x-2:x+2);
+        Ix2_mean = mean(Ix2_matrix(:));
         
-        Matrix = [Ix2(y-5:y+5,x-5:x+5), Ixy(y-5:y+5,x-5:x+5); 
-                  Ixy(y-5:y+5,x-5:x+5), Iy2(y-5:y+5,x-5:x+5)];
+        % Iy2 mean
+        Iy2_matrix = Iy2(y-2:y+2,x-2:x+2);
+        Iy2_mean = mean(Iy2_matrix(:));
+        
+        % Ixy mean
+        Ixy_matrix = Ixy(y-2:y+2,x-2:x+2);
+        Ixy_mean = mean(Ixy_matrix(:));
+        
+        Matrix = [Ix2_mean, Ixy_mean; 
+                  Ixy_mean, Iy2_mean];
         R1 = det(Matrix) - (k * trace(Matrix)^2);
         
         
