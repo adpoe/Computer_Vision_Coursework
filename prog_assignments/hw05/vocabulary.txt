@@ -1,0 +1,20 @@
+############################################
+### @author Anthony (Tony) Poerio
+### @email adp59@pitt.edu
+### CS1674 - Computer Vision
+### Assignment #05 - Question 1
+############################################
+
+
+What I saw when running "visualizeVocabulary.m":
+    * After changing folder paths as instructed, visualizeVocabulary.m, I see the console output a list of numbers counting from 1 --> 200.
+    * Then I see output that says "kmeans run".
+    * Finally, I see two figures display.
+        - Each figure has 5 rows and 5 columns.
+        - Each cell in the figure has what looks to be a specific SIFT feature, extracted from some image.
+        - I expect that this is a sampling of the 'words' we are using in our feature extraction algorithms.
+    * The program also creates a 'centers.mat' file in the root directory of my Matlab installation.
+
+
+
+
