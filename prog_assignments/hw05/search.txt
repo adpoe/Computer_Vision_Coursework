@@ -1,10 +1,58 @@
 ############################################
-### @author Anthony (Tony) Poerio
+### @author Anthony (Tony)
 ### @email adp59@pitt.edu
 ### CS1674 - Computer Vision
 ### Assignment #05 - Question 2
 ############################################
 
+
+NOTE:   I am using the **SMALL** SIFT subset, because my computer is low on space.
+        So my results may be different than yours, if you are using the full SIFT database.
+
+Query 1 --> Black and White Dress (Failure Case):
+    * For query 1, I selected the black and white pattern on Jennifer Aniston's dress:
+        - For the first result, I got an image that seems totally unrelated, except for a similar pattern on the chair in the background of the image.
+        It's possible that this has similar features overall, but it is still not an extremely close match
+        - For results 2 and 3, I don't see a similar pattern at all. My intuition is that I selected such a large area that I'm getting some false positives here.
+        - That said, overall, the images selected *DO* have colors that very similar to those on the dress.
+        - So it makes sense that these images would return as matches, on the large scale, and even that they might be the best matches overall, if we're comparing
+        the ENTIRE image ONLY against the patterns on the dress. But I would consider this case to be a FAILURE, nonetheless. Because I didn't get an exact
+        matches on the dress.
+
+
+Query 2 --> Poofy hair (Borderline Success):
+    * For query 2, I selected Phoebe's blonde hair poof:
+        - Results 1 and 2 seem reasonable, and I would consider them borderline successes.
+        - These images are NOT matches for Phoebe's hair exactly, it DOES look like we're matching the poofy part of Phoebe's hair against the white feathery-thing that
+        the singer has in her hair. The texture, especially looks like the party of Phoebe's hair that I selected.
+        - So overall, I'd consider this a borderline success.
+        - Result 3 is not particularly obvious, but Phoebe *IS* in the image, and the flowers in the vase on the table (in the foreground) also resemble the area
+        of Phoebe's hair that I selected.
+        - Overall, I'd consider this a success, but a small one.
+
+
+Query 3 --> Plant (Success):
+    * For query 3, I selected the plant in the background of this image:
+        - This is the first query where I got an **exact** match in another context, and for that reason I do consider it a success overall.
+        - The __first_result__ found another plant, in the top middle of the image (background).
+        - Result 2 has an image that looks like the plant in the background, in the bathroom. So that's also a reasonable match from my POV. 
+        Based on what I selected, I can see how that would be a positive result. (Right hand side of the image, underneath bathroom mirror)
+        - Result 3 is perplexing, however. And I don't really see why this matched. My best guess would be the colors overall.
+
+
+Query 4 --> 88 Pattern on Shirt (Failure):
+    * For query 4, I selected the 88 pattern on Courtney Cox's shirt:
+        - The results for this search all look like apparent failures (and I think it's best to call them that), but on another level, I can see why these were matches.
+        - The buildings, in particular, all have very similar colors to those selected on the shirt. And the straight-edge patterns are also reflected there.
+        - So, for more, it makes perfect sense that these would return as matches. Even though it's not what we're looking for, and overall it's a failure.
+
+
+Query 5 --> Furniture Pattern (Success) :
+    * For query 5, I selected the furniture pattern on one of the sofas at the cafe the friends frequent:
+        - This was the BEST MATCH of them all, by far.
+        - The first 2 results got the same sofa from different angles.
+        - And the 3rd result got a chair with a very similar pattern, also in the cafe.
+        - Overall, I was happiest with this one.
 
 
 
