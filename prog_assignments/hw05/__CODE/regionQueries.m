@@ -14,8 +14,10 @@
 %       bag of words for each frame. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Start by loading in some data, just pick the first image for now
+% Start by loading in some data, pick image 100 for now.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% From our load data example %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 framesdir = 'frames_subset/';
 siftdir = 'sift_subset/';
 fnames = dir([siftdir '*.mat']);
@@ -26,8 +28,9 @@ fnames2 = dir([framesdir '*.jpeg']);
 assert(size(fnames2, 1) > 0);
 assert(all(size(fnames) == size(fnames2)));
 
-% just pick 100, as noted, for debugging purposes 
+% just pick 100
 i = 100; 
+
 % load that file
 fname = [siftdir '/' fnames(i).name];
 load(fname, 'imname', 'descriptors', 'positions', 'scales', 'orients');
@@ -38,10 +41,11 @@ numfeats = size(descriptors,1);
 imname = [framesdir '/' imname]; % add the full path
 im = imread(imname);
 
-%%%%%%%%%%% end load data %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% end load data %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%% >>> NEED TO PICK 5 separate query regions and show results for each
 
 % 1.  Form a query from a region within a frame. Select a polygonal region
 %       interactively with the mouse, and compute a bag of words histogram
@@ -54,20 +58,40 @@ imshow(im);
 displaySIFTPatches(positions(oninds,:), scales(oninds), orients(oninds), im); 
 plot(positions(:,1), positions(:,2), 'ro');
 title('showing features within region of interest in cyan, and all feature positions in red');
-    
+
+% make a list of descriptors with ONLY the values we've found in
+% the selected region
+region_descriptors = zeros(length(oninds),128);
+% set descriptors to be ONLY the values in the region we are looking at
+for i=1:length(oninds)
+    region_descriptors(i, :) = descriptors(oninds(i),:);
+end
+
+
+% think:
+% --> need to use oninds to index into positions...
+%       and then use return values from positions
+%       to index into descriptors
+% so, each descriptor(index) --> is centered at position(index, :)
+
 
 % 2. Then compute BOW for ALL other video frames, and compare how similar
 %       the BOW for your for your query region is to any other from BOW.
 %       Use the **compareSimilarity** function (provided)
 %       - Finally, rank the the retrieved frames by how similar they 
 %       are to the query, and return the top 3.
-load('centers.mat');
-bow_for_selected_im = computeBOWRepr(descriptors, means);
-similarities = zeros(200,1); % may need to concat later, but this okay for now
 
-% just do first 200 frames for now
-for index = 1:200
-       
+% load in the centers.mat file
+load('centers.mat');
+
+% compute bow for ONLY our region
+bow_for_selected_im = computeBOWRepr(region_descriptors, means);
+
+% set similarities to all zeroes to start
+similarities = zeros(length(fnames),1); 
+
+% then loop through ALL images and compute the bow
+for index=1:length(fnames)      
     % load that file
     fname = [siftdir '/' fnames(index).name];
     load(fname, 'imname', 'descriptors', 'positions', 'scales', 'orients');
@@ -83,7 +107,6 @@ for index = 1:200
     % so we can sort later
     % and find top 3
     similarities(index,1) = sim;
-    
 end
 
 % get top 3 frames, after this
@@ -119,3 +142,6 @@ end
 %                TO DEBUG, try using frame 100 as the query and
 %                a chunk of the patterned dress as the region.
 %                And only compute BOW similarity for the first 200 frames.
+
+% See folder named /queries for images
+% See "search.txt" for write ups
