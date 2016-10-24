@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% @author:  Anthony (Tony) Poerio (adp59@pitt.edu)
+%
+% CS1674 - Computer Vision
+% Programming Assignment #6
+% Fall 2016
+%
+%   Color Quantization with K-Means
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Part I
+% Find and Display K-means on Fish Image
+im = imread('/CS1674-HW06/fish.jpg');
+
+% call Matlab kmeans with k=2
+%[cidx2,cmeans2] = kmeans(im,2,'dist','sqeuclidean');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% 1.a. -> get k-means image representation %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% read in the image
+im = imread('/CS1674-HW06/fish.jpg');
+
+% make sure image is of type double, so we can feed it to kmeans
+im2 = im2double(im);
+
+% find the number of pixels we need to reshape our matrix
+numpixels = size(im,1) * size(im,2);
+
+% create a matrix with the RGB features as rows
+X = reshape(im2, numpixels, 3);
+
+% run k-means and get our IDS and centroid locations
+k=2; % with a k of 2
+[IDX, C] = kmeans(X, k); % C is the colormap we pass to imwrite
+
+% cast IDX back to uint8, since that's what we need for saving output
+ids = uint8(IDX);
+
+% cast our image back to its orginal shape, now that we are done with
+% kmeans algorithm
+result_image = reshape(ids, size(im,1), size(im,1));
+
+
+
+% Save file out, you need to subtract 1 from the image classes, since once
+% stored in the file the values should go from 0-255, not 1-256 like matlab
+% would do.
+imwrite(imout - 1, colormap, 'fish_quantized.png');
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+% quantize image colors
+k=2;
+[outputImg, meanColors, clusterIds] = quantizeRGB(im, k);
