@@ -2,7 +2,7 @@
 ### @author Anthony (Tony)
 ### @email adp59@pitt.edu
 ### CS1674 - Computer Vision
-### Assignment #06 - Question 1
+### Assignment #06 - Writeup for Questions in Assignment Prompt
 ############################################
 
 Question:  How and why does the SSD differ based on the values of K?
@@ -21,5 +21,19 @@ Question:  How and why does the SSD differ based on the values of K?
     And because the ranges of possible values must change, according to k--which dictates which values are possible--we will necessarily have different
     results when we compute the SSD for different values of k.
 
+
+Writeup:  What did I see for edge detection?
+    For the edge detection part of this assignment, I decided to again use the Fish image that I had been working with in Part I.
+
+    I mostly re-used code from Assignment #04, and was able to string together the relevant parts to achieve edge detection in the image without issue.
+
+    For a THRESHOLD --> I chose to use threshold of **2 times** the average gradient magnitude. This worked reasonably well, and I found that the image
+    my algorithm outputted with these parameters closely resembled the example image shown on slide 19, and referenced in the assignment prompt.
+
+    You can change the threshold by passing in a different parameter, and you will see similar results, but a threshold of 2 times the overall average seems to
+    work well in practice.
+
+    I did notice that NOT ALL true 'edges' were identified with a threshold of 2, but I find that the strongest ones were indeed identified correctly,
+    and so overall I'm happy with these results.
 
 
