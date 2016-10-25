@@ -1,0 +1,25 @@
+############################################
+### @author Anthony (Tony)
+### @email adp59@pitt.edu
+### CS1674 - Computer Vision
+### Assignment #06 - Question 1
+############################################
+
+Question:  How and why does the SSD differ based on the values of K?
+    For different values of k, we converge upon a different number of clusters. And the number of clusters that we select are equal to the number of different values
+    that the resulting quantized image can have in each of its pixel cells.
+    
+    For instance, if k=2, all of the pixels in our **quantized image** must have a value in the range [0,1].
+
+    Likewise, if k=5, then all of the pixels in our **quantized image** must have a values in the range [0, 4]
+
+    However, we know that the range of possible values for the **original image** will ALWAYS be [0, 255].
+
+    So, when we compute the SSD using different values of K, we will __necessarily__ be computing sets of numbers in different ranges (i.e. - [0,k])
+    against values in the range [0,255].
+
+    And because the ranges of possible values must change, according to k--which dictates which values are possible--we will necessarily have different
+    results when we compute the SSD for different values of k.
+
+
+
