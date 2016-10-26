@@ -20,3 +20,5 @@ for k=2:5
     [ error ] = computeQuantizationError( origImg, quantizedImg );
     fprintf('Error for k=%u is %u\n', k, error);
 end
+
+

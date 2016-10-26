@@ -156,6 +156,7 @@ end
 
 % display the image
 figure; imshow(display_img);
+title('Edge Visualization for Input Image');
 
 % save the iamge
 imwrite(display_img, 'edge_detection.png');
