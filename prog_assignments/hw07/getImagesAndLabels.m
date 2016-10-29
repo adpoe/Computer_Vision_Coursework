@@ -92,7 +92,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % run kmeansML, just like in HW05-P
 disp('kmeans run...');
-k = 100; %1500;
+k = 100; 
 [membership, means] = kmeansML(k, double(descriptors_all));
 
 %save('centers.mat', 'membership', 'means')
@@ -112,7 +112,9 @@ k = 100; %1500;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %compute a BOW histogram for each descriptor
-    [bow] = getHistogram(double(descriptors'), means);
+    [bow] = getHistogram(double(descriptors'), means); 
+    % --> this was my testing code, I've ported it to all the relevant
+    % places in the computeSPMHistogram function
 
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -225,7 +227,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % next, use the KNN classifer. WRITE OWN CODE FOR KNN. Cannot use built-in
 % Matlab function. 
 %       * for each test image, compute the k-closest neighbors (by
@@ -240,11 +243,24 @@ end
 %       (mode))
 %       * assign the test image a label = the mode
 
-%[ labels ] = findLabelsKNN( pyramids_train, pyramids_test, labels_train, k ) 
-k=5; % set a reasonable k.
-[ labels ] = findLabelsKNN( trainingSPM, testingSPM, label_list, k );
+
+% Run this for 4 separate values for K
+k=1; 
+[ predicted_labels_k1 ] = findLabelsKNN( trainingSPM, testingSPM, label_list, k );
+
+k=5; 
+[ predicted_labels_k5 ] = findLabelsKNN( trainingSPM, testingSPM, label_list, k );
+
+k=25; 
+[ predicted_labels_k25 ] = findLabelsKNN( trainingSPM, testingSPM, label_list, k );
+
+k=125; 
+[ predicted_labels_k125 ] = findLabelsKNN( trainingSPM, testingSPM, label_list, k );
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % after evaluating, need to evaluate the accuracy of the classifiers.
 % compute what fraction of the test images was assigned to the correct
 % label (i.e. - the 'ground truth' label that came with the data set)
@@ -254,5 +270,70 @@ k=5; % set a reasonable k.
 %       (15x1) all ints
 %               predictionLabels is the corresponding Nx1 vector of labels
 %               predicted by the classifier
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+% Get Ground Truth Labels
+ground_truth_labels = [];
+% attach labels next, using what we know in trainingData
+for i=1:size(testingData,1);
+    category = testingData(i).category;
+    
+    % base case, label=1 (not really a base case, but just starting number)
+    label = 1;
+    
+    % match based on category name
+    if strcmp(category, 'bedroom')
+        label=1;
+    elseif strcmp(category, 'CALsuburb')
+        label=2;
+    elseif strcmp(category, 'industrial')
+        label=3;
+    elseif strcmp(category, 'kitchen')
+        label=4;
+    elseif strcmp(category, 'livingroom')
+        label=5;
+    elseif strcmp(category, 'MITcoast')
+        label=6;
+    elseif strcmp(category, 'MITforest')
+        label=7;
+    elseif strcmp(category, 'MIThighway')
+        label=8;
+    elseif strcmp(category, 'MITinsidecity')
+        label=9;
+    elseif strcmp(category, 'MITmountain')
+        label=10;
+    elseif strcmp(category, 'MITopencountry')
+        label=11;
+    elseif strcmp(category, 'MITstreet')
+        label=12;
+    elseif strcmp(category, 'MITtallbuilding')
+        label=13;
+    elseif strcmp(category, 'PARoffice')
+        label=14;
+    elseif strcmp(category, 'store')
+        label=15;
+    else
+        disp('found item which has no matching label.');
+    end
+    
+    % add the label to our list
+    ground_truth_labels = vertcat(ground_truth_labels, label);
+end
+
+% finally, predict accuracy for each set of labels
+[accuracy_k1] = computeAccuracy(ground_truth_labels, predicted_labels_k1);
+[accuracy_k5] = computeAccuracy(ground_truth_labels, predicted_labels_k5);
+[accuracy_k25] = computeAccuracy(ground_truth_labels, predicted_labels_k25);
+[accuracy_k125] = computeAccuracy(ground_truth_labels, predicted_labels_k125);
+
+% print accuracies to console
+fprintf('Accuracy for k=1:   %f PERCENT CORRECT\n', accuracy_k1);
+fprintf('Accuracy for k=5:   %f PERCENT CORRECT\n', accuracy_k5);
+fprintf('Accuracy for k=25:   %f PERCENT CORRECT\n', accuracy_k25);
+fprintf('Accuracy for k=125:   %f PERCENT CORRECT\n', accuracy_k125);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
