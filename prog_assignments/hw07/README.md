@@ -9,9 +9,9 @@
 
 ## Graded Files
 - The three files which the assignment prompt specifically notes will be graded are:
-1. computeSPMHistogram.m -- this is included, and you will see the changes I implemented to get this to work. My changes are commented
-2. findLabelsKNN.m -- this is included, and was written from scratch, to suit my implementation
-3. main script --> named: 'getImagesAndLabels.m'. This is the main script I wrote for this project. It performs all calculations requested, and displays the accuracy results of each KNN run, upon completion.
+1. **computeSPMHistogram.m** -- this is included, and you will see the changes I implemented to get this to work. My changes are commented
+2. **findLabelsKNN.m** -- this is included, and was written from scratch, to suit my implementation
+3. **main script** --> named: **'getImagesAndLabels.m**'. This is the main script I wrote for this project. It performs all calculations requested, and displays the accuracy results of each KNN run, upon completion.
 
 ## Notes and Instructions
 * To Note:  I have used a smaller subset in my own testing, and this file still takes about 1-minute run on my computer.
@@ -26,7 +26,7 @@
    Accuracy for k=125:   0.065359 PERCENT CORRECT  
 
 This makes it look like a lower KNN is generally better. Though a KNN of size-1 will still suffer from inaccuracy (overfitting?) on most data sets.  
-Specifically, as k --> infinity, the **accuracy converges** to 1/#categories, here 1/15, or ~0.06. Essentially, at this point it is the same as randomly guessing.
+Specifically, as k --> infinity, the **accuracy converges** to 1/#categories, here 1/15, or ~0.066. Essentially, at this point it is the same as randomly guessing.
 
 
 
