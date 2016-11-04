@@ -29,59 +29,86 @@ load('/Users/tony/Documents/MATLAB/CS1674-HW08/zero_shot_setup.mat')
 %         scores --> 243 --> 2 double
 
 
-% create our labels output value
-labels = zeros(size(set_B_attributes, 1),1);
+% manually enter the actual possible animal numbers we could select
+% obtained by examining data in 'set_B_animals' variable,
+% which was computed by the 'zero_shot_setup.m' script
+possible_animal_list = [6;14;15;18,;24;25;34;39;42;48];
 
-% iterate through all classes
-for i = 1:size(set_B_attributes,1)
-    
-    % create array to hold all of our probs
-    all_probs = []; 
-    
-    % iterate through all attributes
-    for j = 1:num_attributes
-        probs = [];
-        
-        % Use set_B_attributes to find out which probability set we should use
-        x = set_B_attributes(i,j);
-        
-        % 0 = attr_probs{i}(:,1)
-        if x == 0
-            probs = attr_probs{j}(:,1);
-        end
-        
-        % 1 = attr_probs{i}(:,2)
-        if x == 1
-            probs = attr_probs{j}(:,2);
-        end
-        
-        % get probs as a row vector so we can vertcat
-        probs = probs';
-        
-        % cat all probs for this vector
-        all_probs = vertcat(all_probs, probs);
+% for each animal in this list, find which attributes are relevant
+ attr_list_by_animal = zeros(10,85);  % 10 animals, 85 attributes
+ probs_by_animal_HAS  = double(zeros(10,85)); % store all positive probs per animal
+ probs_by_animal_HAS_NOT = double(zeros(10,85)); % store all negative probs, per animal
  
+% and store the probs of each
+for i = 1:10
+    % index into the possible animal list, so we can get data by each
+    % animal we are classifying
+    index = possible_animal_list(i);
+    % iterate through all 85 attributes, per animal
+    for j = 1:85
+        % store the the attribute prescence 0/1, no/yes
+        attr_list_by_animal(i,j) = set_B_attributes(index,j);
+        
+        % store both the positive and negative prob, per animal
+        probs_by_animal_HAS(i,j) = attr_probs{j}(index,1);
+        probs_by_animal_HAS_NOT(i,j) = attr_probs{j}(index,2);
     end
-    
-    % take the product of all our probs
-    products = prod(all_probs, 1);
-    
-    % find the best match
-    [~, ind] = max(all_probs);
-    
-    % store this match in labels
-    labels(i,:) = max(ind);
 end
 
 
+% now, compare these against our test set
+labels = zeros(243,1);
+for test_num = 1:243
+    
+    % store total prob for each animal 
+    prob_list_by_animal = ones(10,85);
+    
+    for attr_num = 1:85
+        test_attr = set_B_attributes(test_num, attr_num);
+        
+        % compute values for our animal vs. all 10 of our test animals
+        % and see which one is the highest
+        % then map that value back to what is stored in the test animal index
+        for animal = 1:10
+            % if attr==1, then the animal has it
+            if test_attr == 1
+                prob = probs_by_animal_HAS(animal,attr_num);
+            end
+            
+            % otherwise, the animal does NOT have it
+            if test_attr == 0
+                prob = probs_by_animal_HAS_NOT(animal,attr_num);
+            end
+            
+            % store the probability corresponding to whether we expect this
+            % animal to HAVE or NOT_HAVE the attribute
+            prob_list_by_animal(animal,attr_num) = prob;
+        end
+        
+    end
+    
+    % get the product of all probabilities by animal
+    product_of_probs_by_animal = prod(prob_list_by_animal, 2);
+    
+    % find the inex with the maximum probability, based on our calculations
+    [~, ind] = max(product_of_probs_by_animal);
+    
+    % map this probability back to the animal numbers in our list
+    animal_num = possible_animal_list(ind);
+    
+    % assign the label corresponding to that animal number
+    labels(test_num,1) = animal_num;
+end
+
+
+% count the number of predictions we've made correctly
 correct_predictions = 0;
-labels = ind';
 for i = 1:size(labels,1)
     if labels(i) == set_B_animals(i)
         correct_predictions = correct_predictions + 1;
     end
 end
 
-% print results
+% print results, calculating the number of predictions we've made correctly
 fprintf ('ZERO SHOT RESULTS:  %f percent of predictions were correct\n\n', double(correct_predictions / size(labels,1)) ) 
 
