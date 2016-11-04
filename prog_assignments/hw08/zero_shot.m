@@ -22,7 +22,8 @@ load('/Users/tony/Documents/MATLAB/CS1674-HW08/zero_shot_setup.mat')
 % respectively, in the variable attr_probs --> an 85x1 cell array --> 85
 % attributes total
 %       WHERE: attr_probs{i} = [243x2 double]
-%       attr_probs{1}(1,2)
+%               - attr_probs{i}(x,1) = P(attribute_i = 0|x)
+%               - attr_probs{i}(x,2) = P(attribute_i = 1|x)
 
 % GIVEN:  Set_B_Attributes --> 243x85 double
 %             WHERE:  (i,j) tells us if the ith class has the jth attribute
@@ -37,17 +38,22 @@ load('/Users/tony/Documents/MATLAB/CS1674-HW08/zero_shot_setup.mat')
 % We're dealing with individual animal examples, not just the animal classes.
 
 
-% manually enter the actual possible animal numbers we could select
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% PRE-PROCESSSING %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Goal: get a set of variables with all possible animals and their traits,
+%       so that we can index these and find the values that are relevant
+%       more quickly/easily 
+
+% Get a list of the actual possible animal numbers we could select
 % obtained by examining data in 'set_B_animals' variable,
 % which was computed by the 'zero_shot_setup.m' script
 possible_animal_list = test_ids;
 
 % for each animal in this list, find which attributes are relevant
 attr_list_by_animal = zeros(10,85);  % 10 animals, 85 attributes
-probs_by_animal_HAS  = double(zeros(10,85)); % store all positive probs per animal
-probs_by_animal_HAS_NOT = double(zeros(10,85)); % store all negative probs, per animal
  
-% and store the probs of each
+% and store the traits of each
 for i = 1:10
     % index into the possible animal list, so we can get data by each
     % animal we are classifying
@@ -58,16 +64,25 @@ for i = 1:10
         % animals which are unseen, just as classifiers
         % --> store the the attribute's presence 0/1, no/yes
         attr_list_by_animal(i,j) = M(index,j);
-        
     end
 end
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% ZERO-SHOT PREDICTION FUNCTION %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% create a blank list of labels
 labels = zeros(243,1);
+
+% iterate through all 243 samples
 for test_num = 1:243
-    % check which animal we are closest to
+    % IDEA:
+    % - for each of the 10 possible animals, go through EACH attribute it
+    % has/does NOT have, and store the corresponding probability value for
+    % our TEST ANIMAL.
+    % THEN: 
+    % - Multiply all of those probs together, 
+    % and check which animal we are closest to
     for animal = 1:10
         % for each animal, build a list of probabilities for each attribute
         prob_list_by_animal = ones(10,85);
@@ -77,7 +92,7 @@ for test_num = 1:243
             
            % if the animal we're looking at doesn't have attribute
            % then, use the probability from column=1 in attr_probs
-            if attr_list_by_animal(animal, attribute) == 0
+           if attr_list_by_animal(animal, attribute) == 0
                 prob = attr_probs{attribute}(test_num,1);
                 
             % otherwise, we want to use the probability from
@@ -95,7 +110,7 @@ for test_num = 1:243
         
     end % end-animal loop
     
-     % get the product of all probabilities by animal
+    % get the product of all probabilities by animal
     product_of_probs_by_animal = prod(prob_list_by_animal, 2);
     
     % find the inex with the maximum probability, based on our calculations
@@ -114,7 +129,9 @@ end % end-test_num loop
 % count the number of predictions we've made correctly
 correct_predictions = 0;
 for i = 1:size(labels,1)
+    % compare our prediction vs. the ACTUAL animal we were looking at
     if labels(i) == set_B_animals(i)
+        % increment a counter ONLY when we made the prediction correctly
         correct_predictions = correct_predictions + 1;
     end
 end
