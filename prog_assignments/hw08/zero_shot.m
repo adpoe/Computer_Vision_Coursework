@@ -29,15 +29,23 @@ load('/Users/tony/Documents/MATLAB/CS1674-HW08/zero_shot_setup.mat')
 %         scores --> 243 --> 2 double
 
 
+% THINK:  Scores, attr_probs has all of the P(YES) and P(NO) values
+% for our 243 test samples for set B
+% "The P(attribute_i = 0|x) and P(attribute_i = 1|x) probabilities are stored as the first and second columns, respectively, in the variable attr_probs{i}."
+% You must read the script zero_shot_setup.m to see what exactly lives in attr_probs{i}. 
+% There's one row for each data sample for set_B, not for each animal type.
+% We're dealing with individual animal examples, not just the animal classes.
+
+
 % manually enter the actual possible animal numbers we could select
 % obtained by examining data in 'set_B_animals' variable,
 % which was computed by the 'zero_shot_setup.m' script
-possible_animal_list = [6;14;15;18,;24;25;34;39;42;48];
+possible_animal_list = test_ids;
 
 % for each animal in this list, find which attributes are relevant
- attr_list_by_animal = zeros(10,85);  % 10 animals, 85 attributes
- probs_by_animal_HAS  = double(zeros(10,85)); % store all positive probs per animal
- probs_by_animal_HAS_NOT = double(zeros(10,85)); % store all negative probs, per animal
+attr_list_by_animal = zeros(10,85);  % 10 animals, 85 attributes
+probs_by_animal_HAS  = double(zeros(10,85)); % store all positive probs per animal
+probs_by_animal_HAS_NOT = double(zeros(10,85)); % store all negative probs, per animal
  
 % and store the probs of each
 for i = 1:10
@@ -46,48 +54,48 @@ for i = 1:10
     index = possible_animal_list(i);
     % iterate through all 85 attributes, per animal
     for j = 1:85
-        % store the the attribute prescence 0/1, no/yes
-        attr_list_by_animal(i,j) = set_B_attributes(index,j);
+        % Indexing into M gives me the 85 attributes for my 10
+        % animals which are unseen, just as classifiers
+        % --> store the the attribute's presence 0/1, no/yes
+        attr_list_by_animal(i,j) = M(index,j);
         
-        % store both the positive and negative prob, per animal
-        probs_by_animal_HAS(i,j) = attr_probs{j}(index,1);
-        probs_by_animal_HAS_NOT(i,j) = attr_probs{j}(index,2);
     end
 end
 
-
-% now, compare these against our test set
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% ZERO-SHOT PREDICTION FUNCTION %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 labels = zeros(243,1);
 for test_num = 1:243
-    
-    % store total prob for each animal 
-    prob_list_by_animal = ones(10,85);
-    
-    for attr_num = 1:85
-        test_attr = set_B_attributes(test_num, attr_num);
+    % check which animal we are closest to
+    for animal = 1:10
+        % for each animal, build a list of probabilities for each attribute
+        prob_list_by_animal = ones(10,85);
         
-        % compute values for our animal vs. all 10 of our test animals
-        % and see which one is the highest
-        % then map that value back to what is stored in the test animal index
-        for animal = 1:10
-            % if attr==1, then the animal has it
-            if test_attr == 1
-                prob = probs_by_animal_HAS(animal,attr_num);
+        % go through each attribute and find the value that's relevant
+        for attribute = 1:85
+            
+           % if the animal we're looking at doesn't have attribute
+           % then, use the probability from column=1 in attr_probs
+            if attr_list_by_animal(animal, attribute) == 0
+                prob = attr_probs{attribute}(test_num,1);
+                
+            % otherwise, we want to use the probability from
+            % column=2, for our tests
+            else
+                prob = attr_probs{attribute}(test_num,2);
+                
             end
             
-            % otherwise, the animal does NOT have it
-            if test_attr == 0
-                prob = probs_by_animal_HAS_NOT(animal,attr_num);
-            end
+            % and store the relevant attribute probability 
+            % for the animal we are evaluating
+            prob_list_by_animal(animal,attribute) = prob;
             
-            % store the probability corresponding to whether we expect this
-            % animal to HAVE or NOT_HAVE the attribute
-            prob_list_by_animal(animal,attr_num) = prob;
-        end
+        end % end-attribute loop
         
-    end
+    end % end-animal loop
     
-    % get the product of all probabilities by animal
+     % get the product of all probabilities by animal
     product_of_probs_by_animal = prod(prob_list_by_animal, 2);
     
     % find the inex with the maximum probability, based on our calculations
@@ -98,7 +106,9 @@ for test_num = 1:243
     
     % assign the label corresponding to that animal number
     labels(test_num,1) = animal_num;
-end
+    
+end % end-test_num loop
+
 
 
 % count the number of predictions we've made correctly

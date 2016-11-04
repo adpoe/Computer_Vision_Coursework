@@ -1,0 +1,34 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% @author:  Anthony (Tony) Poerio (adp59@pitt.edu)
+%
+% CS1674 - Computer Vision
+% Programming Assignment #08
+% Fall 2016
+%
+%   RESULTS.TXT
+%   - Shows the accuracy for "zero-shot" and for "SVM"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%  RESULTS
+%    - SVM RESULTS:  0.304527 percent of predictions were correct
+%    - ZERO SHOT RESULTS:  0.119342 percent of predictions were correct
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 
+% 

@@ -39,21 +39,3 @@ end
 % print results
 fprintf ('SVM RESULTS:  %f percent of predictions were correct\n\n', double(correct_predictions / size(labels,1)) ) 
 
-
-
-% Compute accuracy on Set B with an SVM
-% for i = 1:num_attributes
-%     fprintf('Now processing attribute: %u/%u\n', i, num_attributes);
-%     tic
-%     % train an SVM to predict present/not for this attribute
-%     model = fitcsvm(train_samples, train_attributes(:, i));
-%     % convert the model so it can produce probabilities
-%     model_probs = fitSVMPosterior(model);
-%     % apply the model on the test samples
-%     [~, scores] = predict(model_probs, set_B_samples);
-%     % make sure proper probabilities, i.e. P(yes|feature)+P(no|feature)=1
-%     assert(all(sum(scores, 2) == 1));
-%     % store for later use
-%     attr_probs{i} = scores;
-%     toc
-% end
