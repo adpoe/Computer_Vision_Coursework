@@ -94,14 +94,23 @@ end
 
 % save 10 windows on which the SVM predicts positive and include them in
 % your submission
+increment = floor(size(positives,2)/10);
+for save_index = 1:increment:size(positives,2)
+    im = positives(save_index).image;
+    im_name = strcat(strcat('CS1674-HW09/pos_predictions/pred',num2str(save_index)), '.png');
+    imwrite(im, im_name);
+end
 
 
-% to implememnt the window detection
-% start winow at top-left corner of the test image
-% each iteration, move 5-10 px to the right
-% when you reach a window that's over the right border, move 5-10px down
-% and all the way to the left-hand side of the image
-% continue until end
 
+% because we have so many positives (1000+), I'm taking a uniform sample
+% from the data set of size n=30, so that I can compute recall and
+% precision from that
+increment = floor(size(positives,2)/30);
+for save_index = 1:increment:size(positives,2)
+    im = positives(save_index).image;
+    im_name = strcat(strcat('CS1674-HW09/uniform_sample/sample',num2str(save_index)), '.png');
+    imwrite(im, im_name);
+end
 
 

@@ -8,24 +8,48 @@
 ############################################
 
     RESULTS
-    - PREDICTED POSITIVE: I took a sample
-    - PREDICTED NEGATIVE:
-    - SVM RESULTS:  0.304527 percent of predictions were correct
-    - ZERO SHOT RESULTS:  0.119342 percent of predictions were correct
+    - PREDICTED POSITIVE (Total): 1403  data points
+    - PREDICTED NEGATIVE (Total): 17335 data points
+
+    GROUND TRUTH COUNTS (from 15 total images):
+    - From test set:
+        * Image 1 = 0 people
+        * Image 2 = 0 People
+        * Image 3 = 0 People
+        * Image 4 = 0 people
+        * Image 5 = 0 people
+        * Image 6 = 1 person
+        * Image 7 = 4 people
+        * Image 8 = 8 people
+        * Image 9 = 19 people (2 groups) --> call this 2, for simplicity
+        * Image 10 = 5 people
+        * Image 11 = 6 people
+        * Image 12 = 6 people
+        * Image 13 = 1 person
+        * Image 14 = 1 person
+        * Image 15 = 1 person
+                    -------------
+                    Total = 30 people (if we consolidate each group in image 9 into one data point)
+
+    NOTES
+    - Because the data set was so large, and there over 1000 positive matches, I decided to take a uniform sample from my data set of positive matches.
+    - For the purpose of this exercise, my sample size is N=30, which is a high enough number to make some reasonable generalizations about the rest of my data.
+    - Moreover, because I've identified 30 people in my "Ground Truth" count, within this data set --> this calculating precision and recall more simple mathematically.
 
     PRECISION
+        * (Num images that **actually have** Ground Truth of Attribute) / (Total Predictions)
+        * 17 / 30 = 0.5667
 
     RECALL
+        * (Number of Indivial People Found) / (Total **Ground Truth** Count)
+        * 19  / 30 = 0.6333
 
+    COMMENTS
+    - Again, because of the huge number of data points to evaluate, I took a uniform sampling, which was gathered programmatically (my code for this is viewable in this repo).
+    - I made judgment calls in my counting, both for precision and recall, basing my decisions off of the (Area of Overlap) / (Area of Union) heuristic noted in the assignment sheet. I did not measure this programmatically, however, I used my personal judgment, with this principle as a guideline.
+    - Because I took a sample, my intuition tells me that Recall especially, may be much higher in reality. Precision is likely accurate within some reasonable margin of error.
+    - Also to note: I did not re-size the people in each of my images (in test set), as it was unclear how to do so. Because of this, I am identifying **parts** of people in some of my positives. When this happens, I am counting it as a whole person.
 
-    COMMMENTS
-    - The SVM results were as expected, just around 30% accurate
-    - The ZERO-SHOT results were a little lower than expected.
-        * 12% (real) vs 15% (target)
-        * This isn't that far off though, and it is a big improvement over the initial results I was getting, which were about 9.5% (or about consistent with random guessing)
-        * So there may be some error in the code accounting for the 3% difference, but I wasn't able to hunt it down. The logic seems sound, as far as I can tell.
-        * That said, I don't think 12% is outside the realm of possibility (+/- standard error)
-        * So, I'm tenuously okay with these results, but for a production-level system, I think they would best be subjected to further testing and scrutiny.
 
     Thanks,
     Tony

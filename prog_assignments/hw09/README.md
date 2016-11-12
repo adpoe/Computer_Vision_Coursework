@@ -1,24 +1,43 @@
-# Zero Shot Classification & Support Vector Machines
+# Sliding Window Object Detection (Pedestrians on the street)
 @author Anthony (Tony) Poerio
 @email adp59@pitt.edu
 
 ## Overall Notes
-- For this assignment, our goal was to classify a test set of animal images using two methods: 1) Zero-Shot Classification. And 2) Support Vector Machines.
-- Both classification algorithms are implemented.
-* Zero Shot is in --> "zero_shot.m"
-* SVM is in --> "svm.m"
-- I did NOT include the supporting data files, since they were very large for this project, but these files are DEPENDENCIES, and they can be downloaded at: http://people.cs.pitt.edu/~kovashka/cs1699/files/Animals_with_Attributes/
+- For this assignment, our goal was to use sliding window object detection to identify pedestrians on the street in a test data set.
+- There are two .m files containing code for this. The first parses information and trains a classifier. The second uses that classifier to make predictions. File names are outlined below.
+- I used a subset of the whole 1GB+ data set provided for my training. My training set can be found in the folders named: `/pos_sample` and `/neg_sample`
+- My test set has 15 total images (10 with people, 5 without). The test set I used can be found in the folder named `/small_test`
+- After making predictions, I discovered that because the sliding window algorithm necessarily evaluates very many potential locations, I had over 1000 positive results and 17000 negative results.
+    * Because I could not hand calculate precision/recall for over 1000 results, I decided to take a uniform sample from my positive responses (30 total).
+    * This uniform sample was used to answer the questions in `results.txt`.
+    * To view this sample see: `/uniform_sample`
+- The results from my own training are found in `setup.mat`, but running the scripts here will generate a new setup.mat.
+    * Depending on your own setup, it may also overwrite my output folders **so please review the `/pos_predctions` folder before running the scripts!!**
 
-## Graded Files
-- The three files which the assignment prompt specifically notes will be graded are:
-1. **zero_shot.m** - In this file, you will find my zero-shot implementation, along with comments outlining my thinking process
-2. **svm.m** - This file contains my SVM implementation
-3. **results.txt** - This file contains the results of my testing
+## Graded Files / Folders
+- The four files/folders which the assignment prompt specifically notes will be graded are:
+1. **setup_and_train.m** - In this file, you will find my setup and training of the SVM classifier
+2. **test.m** - This file contains my Sliding Window Object Detection implementation, using the classifier trained previously
+3. **results.txt** - This file contains the written results of my testing
+4. **/pos_predictions** - This folder contains 10 png files showing detections that my algorithm marked as positive. These were uniformly selected from my whole data set, which found over 1000 detections total.
+
 
 ## Notes and Instructions
 **LINES TO CHANGE:**  
-* zero_shot.m --> LINE 16, this performs a lot of the "zero_shot_setup.mat" file. Please change this to be consistent with your path to that file
-* svm.m --> LINE 18, again: this performs a lot of the "zero_shot_setup.mat" file. Please change this to be consistent with your path to that file
+These are lines that reference folders in my relative path. Please change to fit yours. All of my folders referenced are included. You should just need to change the outermost folder location, or relative path to the zip file.
+- setup_and_train.m
+    * Line 18
+    * Line 36
+    * Line 58
+    * Line 103
+    * Line 163 (saves the environment variables)
+
+- test.m  
+    * Line 22 (loads the environment variables, previously saved)
+    * Line 39
+    * line 100
+    * line 112
+
 
 
 
