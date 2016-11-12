@@ -2,14 +2,20 @@
 ### @author Anthony (Tony)
 ### @email adp59@pitt.edu
 ### CS1674 - Computer Vision
-### Assignment #08 - Writeup for Questions in Assignment Prompt
+### Assignment #09 - Writeup for Questions in Assignment Prompt
 ###   RESULTS.TXT
-###   -  Shows the accuracy for "zero-shot" and for "SVM"
+###   -  Lists how many bounding boxes predicted positive vs ground truth
 ############################################
 
     RESULTS
+    - PREDICTED POSITIVE: I took a sample
+    - PREDICTED NEGATIVE:
     - SVM RESULTS:  0.304527 percent of predictions were correct
     - ZERO SHOT RESULTS:  0.119342 percent of predictions were correct
+
+    PRECISION
+
+    RECALL
 
 
     COMMMENTS
