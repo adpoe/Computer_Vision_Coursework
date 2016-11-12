@@ -1,0 +1,26 @@
+############################################
+### @author Anthony (Tony)
+### @email adp59@pitt.edu
+### CS1674 - Computer Vision
+### Assignment #08 - Writeup for Questions in Assignment Prompt
+###   RESULTS.TXT
+###   -  Shows the accuracy for "zero-shot" and for "SVM"
+############################################
+
+    RESULTS
+    - SVM RESULTS:  0.304527 percent of predictions were correct
+    - ZERO SHOT RESULTS:  0.119342 percent of predictions were correct
+
+
+    COMMMENTS
+    - The SVM results were as expected, just around 30% accurate
+    - The ZERO-SHOT results were a little lower than expected.
+        * 12% (real) vs 15% (target)
+        * This isn't that far off though, and it is a big improvement over the initial results I was getting, which were about 9.5% (or about consistent with random guessing)
+        * So there may be some error in the code accounting for the 3% difference, but I wasn't able to hunt it down. The logic seems sound, as far as I can tell.
+        * That said, I don't think 12% is outside the realm of possibility (+/- standard error)
+        * So, I'm tenuously okay with these results, but for a production-level system, I think they would best be subjected to further testing and scrutiny.
+
+    Thanks,
+    Tony
+
