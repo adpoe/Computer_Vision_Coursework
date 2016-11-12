@@ -11,8 +11,6 @@
     * Because I could not hand calculate precision/recall for over 1000 results, I decided to take a uniform sample from my positive responses (30 total).
     * This uniform sample was used to answer the questions in `results.txt`.
     * To view this sample see: `/uniform_sample`
-- The results from my own training are found in `setup.mat`, but running the scripts here will generate a new setup.mat.
-    * Depending on your own setup, it may also overwrite my output folders **so please review the `/pos_predctions` folder before running the scripts!!**
 
 ## Graded Files / Folders
 - The four files/folders which the assignment prompt specifically notes will be graded are:
