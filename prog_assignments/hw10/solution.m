@@ -186,6 +186,9 @@ wrong_fc8 = 0.0;
 wrong_fc7 = 0.0;
 wrong_fc6 = 0.0;
 
+% store predicted test labels for fc8, for confusion matrix
+predicted_test_labels_fc8 = [];
+
 % make a prediction for each of our images in the test set
 % and check whether it was correct
 for image_index = 1:size(test_labels, 2)
@@ -203,6 +206,9 @@ for image_index = 1:size(test_labels, 2)
     label_fc7 = predict(svm_model_fc7, fc7_vector);
     label_fc6 = predict(svm_model_fc6, fc6_vector);
 
+    % store predicted test labels for fc8, for a confusion matrix
+   predicted_test_labels_fc8(image_index) = label_fc8;
+    
     % then check veracity of each prediction, and store statistics
     if label_fc8 == ground_truth_label
         correct_fc8 = correct_fc8 + 1.0;
@@ -229,6 +235,6 @@ fprintf('FC7 Correctness = %f\n\n', correct_fc7/(correct_fc7 + wrong_fc7))
 fprintf('FC6 Correctness = %f\n\n', correct_fc6/(correct_fc6 + wrong_fc6))
 
 % confusion matrix
-
+CM = confusionmat(test_labels, predicted_test_labels_fc8);
 % 4. What do you observe about the types of errors your the network makes?
 % Enter your answer in a new text file, 'obsvervations.txt'
