@@ -1,0 +1,6 @@
+>> % output correctness for each
+FC8 Correctness = 0.876316
+
+FC7 Correctness = 0.868421
+
+FC6 Correctness = 0.844737
