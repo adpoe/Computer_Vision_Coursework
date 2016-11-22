@@ -1,6 +1,51 @@
->> % output correctness for each
-FC8 Correctness = 0.876316
+############################################
+### @author Anthony (Tony)
+### @email adp59@pitt.edu
+### CS1674 - Computer Vision
+### Assignment #10 - Observations on deep network prediction results
+###   OBSERVATIONS.TXT
+###   -  Outlines correctness for layers FC8, FC7, and FC6
+###   -  Displays confusion matrix for FC8
+############################################
 
-FC7 Correctness = 0.868421
 
-FC6 Correctness = 0.844737
+
+## Correctness for Each Fully Connected Layer
+
+    - FC8 Correctness = 0.876316
+
+    - FC7 Correctness = 0.868421
+
+    - FC6 Correctness = 0.844737
+
+
+## Confusion Matrix for the FC8 Classifier
+CM =
+
+    16     0     0     0     0     0     0     0     0     0     0     1     0     0     0     0     0     5     0     0
+     1    13     1     0     0     0     0     0     0     0     1     0     2     0     0     0     0     0     0     0
+     0     1    18     0     0     1     0     0     0     0     0     0     0     0     0     0     0     0     0     0
+     1     0     0    15     1     0     0     1     0     3     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     9     0     0     0     1     0     1     0     0     0     0     0     0     0     0     0
+     1     0     0     0     0    14     0     0     0     0     1     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0    21     0     0     0     0     0     2     0     0     0     0     0     1     0
+     0     0     0     1     0     0     0    12     0     0     0     0     0     0     0     0     0     1     0     0
+     0     0     0     0     0     0     0     0     7     0     0     0     0     0     0     0     0     0     0     0
+     0     0     0     1     0     0     0     0     0    16     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     1     1     0     0     0     0    18     0     0     0     0     0     0     1     0     0
+     0     0     0     0     1     0     0     0     0     0     0    20     0     0     0     0     0     0     0     0
+     0     1     0     0     0     0     1     0     1     0     0     0    20     1     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0     1    24     1     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0     1     0    14     0     0     2     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    13     0     0     0     0
+     0     0     0     0     0     0     2     0     0     0     0     0     0     0     1     0    17     1     0     0
+     0     0     0     0     1     0     0     0     0     0     0     0     0     0     0     0     0    21     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    23     0
+     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    22
+
+## General Observations / Types of Errors
+- Based on the above confusion matrix, I don't see any obvious 'type' of error that we can generalize for the FC8 classifier.
+- Maybe it's different for FC7 or FC6, but because we had such a high percentage of CORRECT predictions for FC8,(~88%), I just don't there's enough data about errors to generalize well.
+- What I do see is that the vast majority of predictions were correct (along the digaonal), and that those few that were NOT correct don't fall into any set pattern.
+- Overall, it's obvious that this type of deep network learning is very effective (as evidenced by the high accuracy rate), but the tradeoff is this: these features were trained on 1Million+ images.
+    * This is VERY computationally and time intensive. So even though it is effective, there are still downsides to this type of training.
